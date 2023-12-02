@@ -59,16 +59,6 @@ export default function QuickAction({navigation}) {
     };
 
 
-    const resizeImage = async () => {
-        const manipResult = await manipulateAsync(
-          image,
-          [{ rotate: 90 }, { flip: FlipType.Vertical }],
-          { compress: 1, format: SaveFormat.JPEG }
-        );
-        setImage(manipResult.uri);
-      };
-
-
     if (!permission) {
     // Camera permissions are still loading
     return <View />;
@@ -102,6 +92,7 @@ export default function QuickAction({navigation}) {
                 { compress: 0, format: SaveFormat.JPEG }
               );
               setImage(manipResult.uri);
+              console.log(manipResult.uri)
         }
     }
 

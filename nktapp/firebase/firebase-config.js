@@ -198,7 +198,7 @@ export async function addQuickAction(event){
 export async function uploadImage(uid, avatar, type) {
 
   const metadata = {
-    contentType: 'image/jpeg'
+    contentType: 'image/jpeg',
   };
 
   
