@@ -10,7 +10,7 @@ import {useForm, Controller} from 'react-hook-form';
 import CustomInput from '../components/CustomInput';
 
 //Firebase
-//import { signIn } from '../firebase/firebase-config';
+import { signInWithEmail } from '../firebase/firebase-config';
 
 
 
@@ -29,7 +29,8 @@ export default function SignIn({navigation}){
     const onSignIn = async data => {
         setIsLogging(true);
         const { email, password } = data;
-        //signIn(email, password).then(() => setIsLogging(false));
+        await signInWithEmail(email, password);
+        setIsLogging(false);
     };
 
     const onSignUp = () => {
@@ -115,14 +116,8 @@ export default function SignIn({navigation}){
                         }
                 </TouchableOpacity>
                 <TouchableOpacity 
-                    onPress={onSignUp}
-                    style={{ width: '100%', height: 50, justifyContent: 'center', alignItems: 'center', marginTop: 20, flexDirection: 'row' }}>
-                    <Text style={{color: colors.grey_d}}>Nie masz konta?</Text>
-                    <Text style={{color: colors.primary}}>  Zarejestruj się!</Text>
-                </TouchableOpacity>
-                <TouchableOpacity 
                     onPress={onForgotPassword}
-                    style={{ width: '100%', height: 50, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+                    style={{ width: '100%', height: 50, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginTop: 40 }}>
                     <Text style={{color: colors.grey_d}}>Zapomniałeś hasła?</Text>
                 </TouchableOpacity>
             </View>

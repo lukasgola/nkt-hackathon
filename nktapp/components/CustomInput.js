@@ -3,7 +3,7 @@ import {View, TextInput, Text} from 'react-native';
 import {Controller} from 'react-hook-form';
 
 
-//import Ionicons from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {useTheme} from '../theme/ThemeProvider'
 
@@ -52,11 +52,7 @@ const CustomInput = ({
                 justifyContent: 'center'
               }}
             >
-              <View style={{
-                width: 40,
-                height: 40,
-                backgroundColor: 'red'
-              }}></View>
+              <Ionicons name={icon} size={size+4} color={colors.grey_d}/>
             </View>
               
 
