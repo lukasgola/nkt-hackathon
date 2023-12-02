@@ -195,7 +195,7 @@ export async function addQuickAction(event){
   }
 }
 
-export async function uploadImage(uid, avatar, type) {
+export async function uploadImage(uid, avatar) {
 
   const metadata = {
     contentType: 'image/jpeg',
@@ -205,10 +205,8 @@ export async function uploadImage(uid, avatar, type) {
   const response = await fetch(avatar);
   const blob = await response.blob();
 
-  const directory = type == 'issues';
-
   // Upload file and metadata to the object 'images/mountains.jpg'
-  const storageRef = ref(storage, directory + uid);
+  const storageRef = ref(storage, "issues" + uid);
   const uploadTask = uploadBytesResumable(storageRef, blob);
 
   return new Promise((resolve, reject) => {
@@ -239,8 +237,8 @@ export async function uploadImage(uid, avatar, type) {
       
       const downloadURL = await getDownloadURL(uploadTask.snapshot.ref)
       resolve({
-        downloadURL,
-        metadata: uploadTask.snapshot.metadata
+        downloadURL
+        //metadata: uploadTask.snapshot.metadata
       })
     }
   );

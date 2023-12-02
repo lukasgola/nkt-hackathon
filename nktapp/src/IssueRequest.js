@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Dimensions ,Text, View, Button, Image, TouchableOpacity, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, Alert} from 'react-native';
+import { Dimensions ,Text, View, Button, Image, TouchableOpacity, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, Alert, ActivityIndicator} from 'react-native';
 import { Camera } from 'expo-camera';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -24,6 +24,7 @@ export default function QuickAction({navigation}) {
     const [camera, setCamera] = useState(null);
     const [image, setImage] = useState(null);
     const [type, setType] = useState(Camera.Constants.Type.front);
+    const [isSending, setIsSending] = useState(false);
 
     const {colors} = useTheme();
 
@@ -40,13 +41,15 @@ export default function QuickAction({navigation}) {
             text: 'Yes',
             onPress: async () => {
                 try {
+                    setIsSending(true)
                     const {description} = data;
-                    const url = await uploadImage(auth.currentUser.uid, image, 'issue')
+                    const url = await uploadImage(auth.currentUser.uid, image)
                     const event = {
-                        image: url,
+                        image: url.downloadURL,
                         desc: description == undefined ? '' : description
                     }
                     await addQuickAction(event);
+                    setIsSending(false)
                     navigation.goBack();
                 } catch (error) {
                     console.log(error)
@@ -88,7 +91,7 @@ export default function QuickAction({navigation}) {
             const data = await camera.takePictureAsync();
             const manipResult = await manipulateAsync(
                 data.uri,
-                [{ rotate: 90 }],
+                [{ rotate: 0 }],
                 { compress: 0, format: SaveFormat.JPEG }
               );
               setImage(manipResult.uri);
@@ -168,8 +171,11 @@ export default function QuickAction({navigation}) {
         <KeyboardAvoidingView 
             behavior='padding'
             keyboardShouldPersistTaps='handled'
-            style={{ flex: 1, padding: '5%', justifyContent: 'space-around'}}
+            style={{ flex: 1, padding: '5%', }}
         >
+            {!isSending ?
+            <View style={{flex: 1, justifyContent: 'space-around'}}>
+            
             <TouchableWithoutFeedback
                 onPress={() => {
                     Keyboard.dismiss();
@@ -241,6 +247,22 @@ export default function QuickAction({navigation}) {
                         }}>NEXT</Text>
                     </TouchableOpacity>
                 </View>
+                </View>
+                :
+                <View style={{
+                    flex: 1,
+                    backgroundColor: colors.background,
+                    borderRadius: 10,
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
+                    <View style={{padding: 40, backgroundColor: colors.grey_l, borderRadius: 10, marginBottom: 10}}> 
+                        <ActivityIndicator />
+                    </View>
+                    
+                    <Text style={{fontWeight: 'bold'}}>Przesyłanie obrazu</Text>
+                </View>
+                    }
         </KeyboardAvoidingView>
     )
     }
