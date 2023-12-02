@@ -28,7 +28,32 @@ export default function BottomTabs() {
     }
 
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+    screenOptions={{
+        tabBarStyle: {
+            backgroundColor: colors.background,
+            height: 70,
+        },
+        tabBarItemStyle:{
+            height: 50
+        },
+        tabBarShowLabel: true,
+        tabBarLabelStyle:{
+            color: colors.text,
+        },
+        tabBarIconStyle: {
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+        tabBarIndicatorStyle:{
+        position: 'absolute',
+        top: 0,
+        backgroundColor: colors.primary
+        },
+        swipeEnabled: false,
+        
+    }}
+    >
       <Tab.Screen name="Home" component={Home} options={{
                 tabBarIcon: ({focused}) => (
                     <Item focused={focused} icon='home-outline' filled='home' title='Home' />
