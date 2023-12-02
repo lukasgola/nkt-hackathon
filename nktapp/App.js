@@ -13,6 +13,7 @@ import LoginStack from './navigation/LoginStack';
 //Firebase
 import { auth } from "./firebase/firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
+import { InstalationProvider } from './providers/InstalationProvider';
 
 export default function App() {
 
@@ -32,7 +33,9 @@ export default function App() {
     <NavigationContainer>
       <ThemeProvider>
         <CurrentUserProvider>
-          {isUser ? <BottomTabs /> : <LoginStack/> }
+          <InstalationProvider>
+            {isUser ? <BottomTabs /> : <LoginStack/> }
+          </InstalationProvider>
         </CurrentUserProvider>
       </ThemeProvider>
     </NavigationContainer>

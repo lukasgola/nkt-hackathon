@@ -6,10 +6,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
 
-import Home from '../src/Home';
+
 import History from '../src/History';
 import Profile from '../src/Profile';
 
+import HomeStack from './HomeStack';
 import IssueStack from './IssueStack';
 
 import { useTheme } from '../theme/ThemeProvider';
@@ -56,10 +57,11 @@ export default function BottomTabs() {
         
     }}
     >
-      <Tab.Screen name="Home" component={Home} options={{
+      <Tab.Screen name="HomeStack" component={HomeStack} options={{
                 tabBarIcon: ({focused}) => (
                     <Item focused={focused} icon='home-outline' filled='home' title='Home' />
                 ),
+                headerShown: false
                 
         }}/>
       <Tab.Screen name="History" component={History} options={{

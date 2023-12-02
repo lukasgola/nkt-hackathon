@@ -2,6 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function History() {
+
+  
   return (
     <View style={styles.container}>
       <Text>History</Text>
