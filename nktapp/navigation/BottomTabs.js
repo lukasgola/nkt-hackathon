@@ -8,8 +8,9 @@ const Tab = createBottomTabNavigator();
 
 import Home from '../src/Home';
 import History from '../src/History';
-import Issues from '../src/Issues';
 import Profile from '../src/Profile';
+
+import IssueStack from './IssueStack';
 
 import { useTheme } from '../theme/ThemeProvider';
 
@@ -66,11 +67,13 @@ export default function BottomTabs() {
                     <Item focused={focused} icon='file-tray-full-outline' filled='file-tray-full' title='Home' />
                 ),
                 
+                
         }}/>
-      <Tab.Screen name="Issues" component={Issues} options={{
+      <Tab.Screen name="IssuesStack" component={IssueStack} options={{
                 tabBarIcon: ({focused}) => (
                     <Item focused={focused} icon='alert-outline' filled='alert' title='Home' />
                 ),
+                headerShown: false
                 
         }}/>
         <Tab.Screen name="Profile" component={Profile} options={{
