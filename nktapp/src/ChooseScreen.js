@@ -5,7 +5,6 @@ import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native
 import { useTheme } from '../theme/ThemeProvider';
 import { useInstalation } from '../providers/InstalationProvider';
 
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function ChooseScreen({route, navigation}) {
 
@@ -16,8 +15,8 @@ export default function ChooseScreen({route, navigation}) {
 
 
     const onClick = (item) => {
-        setInstalation(item)
-        setChoice(item.id)
+        route.params.setMode(item);
+        setChoice(item.id);
         navigation.goBack();
     }
 
@@ -31,9 +30,11 @@ export default function ChooseScreen({route, navigation}) {
                     //height: 80,
                     backgroundColor: colors.grey_l,
                     marginTop: 10,
-                    borderRadius: 5,
+                    borderRadius: 10,
                     paddingHorizontal: '5%',
-                    paddingBottom: 10
+                    paddingBottom: 10,
+                    borderWidth: 2,
+                        borderColor: choice == item.id ? colors.primary : colors.grey_l
                 }}
                 onPress={() => onClick(item)}
             >
@@ -43,20 +44,13 @@ export default function ChooseScreen({route, navigation}) {
                         width: '100%',
                         flexDirection: 'row',
                         justifyContent: 'space-between',
-                        alignItems: 'center'
+                        alignItems: 'center',
                     }}
                 >
                     <Text style={{
                         color: colors.text,
                         fontWeight: 'bold'
-                    }}>{item.title}</Text>
-                        {choice == item.id ?
-                        <Ionicons name={'checkmark-outline'} size={20} color={colors.text} />
-                        :
-                        <View>
-
-                        </View>
-                        }                
+                    }}>{item.title}</Text>          
                 </View>
                 <Text style={{
                     color: colors.grey_d

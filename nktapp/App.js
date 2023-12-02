@@ -14,6 +14,7 @@ import LoginStack from './navigation/LoginStack';
 import { auth } from "./firebase/firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 import { InstalationProvider } from './providers/InstalationProvider';
+import { WireCountProvider } from './providers/WireCountProvider';
 
 export default function App() {
 
@@ -34,7 +35,9 @@ export default function App() {
       <ThemeProvider>
         <CurrentUserProvider>
           <InstalationProvider>
+            <WireCountProvider>
             {isUser ? <BottomTabs /> : <LoginStack/> }
+            </WireCountProvider>
           </InstalationProvider>
         </CurrentUserProvider>
       </ThemeProvider>
