@@ -3,7 +3,9 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
+//Providers
 import { ThemeProvider } from './theme/ThemeProvider';
+import { CurrentUserProvider } from './providers/CurrentUserProvider';
 
 import BottomTabs from './navigation/BottomTabs';
 import LoginStack from './navigation/LoginStack';
@@ -29,7 +31,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <ThemeProvider>
-        {isUser ? <BottomTabs /> : <LoginStack/> }
+        <CurrentUserProvider>
+          {isUser ? <BottomTabs /> : <LoginStack/> }
+        </CurrentUserProvider>
       </ThemeProvider>
     </NavigationContainer>
   );

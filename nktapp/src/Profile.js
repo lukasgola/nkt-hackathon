@@ -6,14 +6,28 @@ import { useTheme } from '../theme/ThemeProvider';
 
 //Firebase
 import { auth } from '../firebase/firebase-config';
+import { useCurrentUser } from '../providers/CurrentUserProvider';
 
 export default function Profile() {
 
     const {colors} = useTheme();
+    const {currentUser} = useCurrentUser();
 
 
   return (
     <View style={styles.container}>
+        <View style={{
+          width: '100%',
+          height: 100,
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+            
+            <Text style={{fontWeight: 'bold'}}>{currentUser.firstName} {currentUser.secondName}</Text>
+
+          <Text>{currentUser.email}</Text>
+        </View>
+        
         <TouchableOpacity
             style={{
                 width: '50%',
