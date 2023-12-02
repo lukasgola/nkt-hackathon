@@ -9,6 +9,8 @@ const Tab = createBottomTabNavigator();
 import Home from '../src/Home';
 import History from '../src/History';
 import Issues from '../src/Issues';
+import Profile from '../src/Profile';
+
 import { useTheme } from '../theme/ThemeProvider';
 
 export default function BottomTabs() {
@@ -20,9 +22,8 @@ export default function BottomTabs() {
             <View style={{
                 alignItems: 'center',
                 justifyContent: 'center',
-                width: 80,
             }}>
-                <Ionicons name={props.focused ? props.filled : props.icon} size={25} color={props.focused ? colors.primary : colors.grey} />
+                <Ionicons name={props.focused ? props.filled : props.icon} size={22} color={props.focused ? colors.primary : colors.grey} />
             </View>
         )
     }
@@ -35,7 +36,7 @@ export default function BottomTabs() {
             height: 70,
         },
         tabBarItemStyle:{
-            height: 50
+            height: 50,
         },
         tabBarShowLabel: true,
         tabBarLabelStyle:{
@@ -72,6 +73,12 @@ export default function BottomTabs() {
                 ),
                 
         }}/>
+        <Tab.Screen name="Profile" component={Profile} options={{
+                    tabBarIcon: ({focused}) => (
+                        <Item focused={focused} icon='person-outline' filled='person' title='Home' />
+                    ),
+                    
+            }}/>
     </Tab.Navigator>
   );
 }

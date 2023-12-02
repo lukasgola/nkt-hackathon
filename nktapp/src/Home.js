@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { useTheme } from '../theme/ThemeProvider';
 
-export default function App() {
+export default function Home() {
 
     const {colors} = useTheme();
 

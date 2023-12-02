@@ -15,7 +15,7 @@ import { onAuthStateChanged } from "firebase/auth";
 export default function App() {
 
 
-  const [isUser, setIsUser] = useState(false);
+  const [isUser, setIsUser] = useState(true);
 
   useEffect(() => {
       onAuthStateChanged(auth, (user) => {
