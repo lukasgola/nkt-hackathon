@@ -21,8 +21,6 @@ const CustomMultilineInput = ({
 
   const {colors} = useTheme();
 
-  const fontFamily = 'Montserrat-Regular';
-
   return (
     <Controller
       control={control}
@@ -45,7 +43,6 @@ const CustomMultilineInput = ({
                 style={{
                   width: '90%',
                   height: '100%',
-                  fontFamily: fontFamily,
                   fontSize: size,
                   color: colors.text,
                   padding: 10

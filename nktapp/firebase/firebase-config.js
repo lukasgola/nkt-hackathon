@@ -24,13 +24,13 @@ import { getStorage, ref, getDownloadURL, uploadBytes, uploadBytesResumable, } f
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyB-Q3tWKUfVkRTfKJ1XCT6C_3I2b7aDqJM",
-    authDomain: "nkt-hackathon.firebaseapp.com",
-    projectId: "nkt-hackathon",
-    storageBucket: "nkt-hackathon.appspot.com",
-    messagingSenderId: "393378212269",
-    appId: "1:393378212269:web:335b407034a028148c9924"
-  };
+  apiKey: "AIzaSyC-N4BgP9SDgGw2bMO_ai27e5x8ELB1siU",
+  authDomain: "test-nkt.firebaseapp.com",
+  projectId: "test-nkt",
+  storageBucket: "test-nkt.appspot.com",
+  messagingSenderId: "377113390499",
+  appId: "1:377113390499:web:2fc9c502b6b7205825fe16"
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -186,7 +186,7 @@ export async function setLikeParty(id, organizer, likes, mode){
 
 export async function addQuickAction(event){
   try {
-    await addDoc(collection(db, `users/${auth.currentUser.uid}/quickActions`), {
+    await addDoc(collection(db, `users/${auth.currentUser.uid}/issues`), {
       image: event.image,
       desc: event.desc,
     });
@@ -205,7 +205,7 @@ export async function uploadImage(uid, avatar, type) {
   const response = await fetch(avatar);
   const blob = await response.blob();
 
-  const directory = type == 'quickActions' ? 'quickActions/' : 'profilePictures/';
+  const directory = type == 'issues';
 
   // Upload file and metadata to the object 'images/mountains.jpg'
   const storageRef = ref(storage, directory + uid);

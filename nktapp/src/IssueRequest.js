@@ -9,9 +9,8 @@ import CustomMultilineInput from '../components/CustomMultilineInput';
 import {useTheme} from '../theme/ThemeProvider';
 import {useForm, Controller} from 'react-hook-form';
 
+import { manipulateAsync, FlipType, SaveFormat } from 'expo-image-manipulator';
 
-//import ImageResizer from 'react-native-image-resizer';
-//import { Image as ImageCompress } from 'react-native-compressor';
 
 
 //Firebase
@@ -31,7 +30,7 @@ export default function QuickAction({navigation}) {
     const { control, handleSubmit, formState: {errors} } = useForm();
 
     const onCreateQuickEvent = async data => {
-        Alert.alert('New Quick Action', 'Do you want to public this Quick Action? Your location will become public until you turn it off and everyone will be able to see your photo', [
+        Alert.alert('Nowa Usterka', 'Czy chcesz wysłać nową usterkę', [
         {
             text: 'Cancel',
             onPress: () => {},
@@ -42,7 +41,7 @@ export default function QuickAction({navigation}) {
             onPress: async () => {
                 try {
                     const {description} = data;
-                    const url = await uploadImage(auth.currentUser.uid, image, 'quickActions')
+                    const url = await uploadImage(auth.currentUser.uid, image, 'issue')
                     const event = {
                         image: url,
                         desc: description == undefined ? '' : description
@@ -59,6 +58,17 @@ export default function QuickAction({navigation}) {
         
     };
 
+
+    const resizeImage = async () => {
+        const manipResult = await manipulateAsync(
+          image,
+          [{ rotate: 90 }, { flip: FlipType.Vertical }],
+          { compress: 1, format: SaveFormat.JPEG }
+        );
+        setImage(manipResult.uri);
+      };
+
+
     if (!permission) {
     // Camera permissions are still loading
     return <View />;
@@ -67,9 +77,9 @@ export default function QuickAction({navigation}) {
     if (!permission.granted) {
     // Camera permissions are not granted yet
     return (
-        <View style={{flex: 1}}>
-        <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
-        <Button onPress={requestPermission} title="grant permission" />
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Text style={{ textAlign: 'center' }}>Aby korzystać z kamery potrzebujemy twojej zgody</Text>
+        <Button onPress={requestPermission} title="Przyznaj dostęp" />
         </View>
     );
     }
@@ -85,13 +95,18 @@ export default function QuickAction({navigation}) {
 
     const takePicture = async () => {
         if(camera){
-            const data = await camera.takePictureAsync(null)
-            setImage(data.uri);
+            const data = await camera.takePictureAsync();
+            const manipResult = await manipulateAsync(
+                data.uri,
+                [{ rotate: 90 }],
+                { compress: 0, format: SaveFormat.JPEG }
+              );
+              setImage(manipResult.uri);
         }
     }
 
 
-    const retake = () => {
+    const retake = async () => {
         setImage(null)
     }
 
@@ -186,7 +201,7 @@ export default function QuickAction({navigation}) {
                     <CustomMultilineInput
                         name="description"
                         control={control}
-                        placeholder="Write a few words about the event ..."
+                        placeholder="Napisz co się stało ..."
                         size={12} 
                         color={colors.grey_l} 
                         multiline={true}
@@ -209,10 +224,13 @@ export default function QuickAction({navigation}) {
                             borderRadius: 10,
                             backgroundColor: colors.background,
                             justifyContent: 'center',
-                            alignItems: 'center'
+                            alignItems: 'center',
                         }}
                     >
-                        <Text>RETAKE</Text>
+                        <Text style={{
+                            color: colors.text,
+                            fontWeight: 'bold'
+                        }}>RETAKE</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity 
@@ -226,7 +244,10 @@ export default function QuickAction({navigation}) {
                             alignItems: 'center'
                         }}
                     >
-                        <Text>NEXT</Text>
+                        <Text style={{
+                            color: colors.background,
+                            fontWeight: 'bold'
+                        }}>NEXT</Text>
                     </TouchableOpacity>
                 </View>
         </KeyboardAvoidingView>
