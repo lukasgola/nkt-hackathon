@@ -49,11 +49,11 @@ export default function SignIn({navigation}){
             <View style={{ width: 0.9*width }}>
                 <View style={{ width: '100%', height: 150, justifyContent: 'center', alignItems: 'center', marginBottom: 20 }}>
                     <Image 
-                        source={require ('../assets/splash.png')} 
+                        source={require ('../assets/NKT.png')} 
                         style={{
-                            width: 120,
-                            height: 120
+                            width: '60%',
                         }}
+                        resizeMode='contain'
                     />
                     <Text style={{
                         fontSize: 24,

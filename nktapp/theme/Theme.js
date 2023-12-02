@@ -1,8 +1,8 @@
 // Light theme colors
 export const lightColors = {
-    primary: '#00d295',
+    primary: '#122f76',
     primary_l: '#d7f6ed',
-    secondary: '#f9b411',
+    secondary: '#00d295',
     secondary_l :'#fbedcc',
     grey_l: '#f2f2f2',
     grey: '#cbcbd7',
