@@ -144,10 +144,15 @@ export async function addIssue(event){
 export async function addHistory(event){
   try {
     await addDoc(collection(db, `users/${auth.currentUser.uid}/history/`), {
-      image: event.image,
-      desc: event.desc,
-      latitude: event.latitude,
-      longitude: event.longitude
+      instalation: event.instalation,
+      airTemperature: event.airTemperature,
+      groundTemperature: event.groundTemperature,
+      groundResistance:  event.groundResistance,
+      wireCount: event.wireCount,
+      metalType: event.metalType,
+      isolationType: event.isolationType,
+      power: event.power,
+      current: event.current
     });
   } catch (e) {
     console.error("Error adding document: ", e);

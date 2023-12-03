@@ -15,7 +15,7 @@ import Slider from '@react-native-community/slider';
 import Toast from 'react-native-toast-message';
 
 
-import { getDataFromWires, setGlobalValues } from '../firebase/firebase-config';
+import { getDataFromWires, setGlobalValues, addHistory } from '../firebase/firebase-config';
 
 
 export default function Home({navigation}) {
@@ -173,16 +173,30 @@ export default function Home({navigation}) {
           current: valueType == "current" ? current : null
         }
 
+        const input2 = {
+          instalation: instalation.title,
+          airTemperature: instalationType == "Powietrze" ? airTemp : null,
+          groundTemperature: instalationType == "Powietrze" ? null : groundTemp,
+          groundResistance:  instalationType == "Powietrze" ? null : groundRes,
+          wireCount: wireCount.title,
+          metalType: metalType,
+          isolationType: isolationType,
+          power: valueType == "power" ? power : null,
+          current: valueType == "current" ? current : null
+        }
+
         if (valueType == "power"){
           setGlobalValues(instalation.title, airTemp, wireCount.title, metalType, isolationType, power, null, groundTemp, groundRes)
           const result = await getDataFromWires(instalation.title, airTemp, wireCount.title, metalType, isolationType, power, null, groundTemp, groundRes)
           //console.log(result)
+          addHistory(input2);
           onAirClick();
           navigation.navigate('CableResult', {cables: result, input: input});
         } else {
           setGlobalValues(instalation.title, airTemp, wireCount.title, metalType, isolationType, null, current, groundTemp, groundRes)
           const result = await getDataFromWires(instalation.title, airTemp, wireCount.title, metalType, isolationType, null, current, groundTemp, groundRes)
           //console.log(result)
+          addHistory(input2)
           onAirClick();
           navigation.navigate('CableResult', {cables: result, input: input});
         }

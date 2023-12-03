@@ -112,9 +112,6 @@ export default function CableResult({route}) {
                 </View>
                 )
         }
-        
-
-        
     }
 
     useEffect(()=> {

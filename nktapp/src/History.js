@@ -11,6 +11,8 @@ import { auth, db } from '../firebase/firebase-config';
 import { getDocs, collection } from "firebase/firestore";
 import { useCurrentLocation } from '../providers/CurrentLocationProvider';
 
+import { getDataFromWires, setGlobalValues } from '../firebase/firebase-config';
+
 export default function History({navigation}) {
 
 
@@ -31,45 +33,8 @@ export default function History({navigation}) {
         }
         temp.push(data);
     });
-    setIssues(temp)
+    setHistory(temp)
 }
-
-
-
-  const Issue = ({item}) => {
-    return(
-      <View style={{
-        width: '90%',
-        height: 150,
-        backgroundColor: colors.grey_l,
-        borderRadius: 10,
-        marginHorizontal: '5%',
-        marginBottom: 10,
-        flexDirection: 'row',
-        padding: 15
-      }}>
-        <Image
-          source={{uri: item.image}}
-          width={100}
-          height={120}
-          style={{
-            borderRadius: 8,
-          }}
-        />
-        <View style={{marginLeft: 15}}>
-          <Text style={{
-            color: colors.grey_d,
-          }}>03.12.2023</Text>
-          <Text style={{
-            fontSize: 18,
-            marginTop: 10
-          }}>{item.desc}</Text>
-        </View>
-        
-      </View>
-    )
-    
-  }
 
 
   React.useEffect(() => {
@@ -78,24 +43,75 @@ export default function History({navigation}) {
     });
     return focusHandler;
     
-}, [navigation]);
+  }, [navigation]);
+
+
+  const onHistoryClick = async (input) => {
+    console.log(input)
+    setGlobalValues(input.instalation, input.airTemperature, input.wireCount, input.metalType, input.isolationType, input.power, input.current, input.groundTemperature, input.groundResistance)
+    const result = getDataFromWires( 
+      input.instalation,
+      input.airTemperature,
+      input.wireCount,
+      input.metalType,
+      input.isolationType,
+      input.power,
+      input.current,
+      input.groundTemperature,
+      input.groundResistance,)
+
+      navigation.navigate('CableResult', {cables: result, input: input})
+  }
+
+
+  const InputRow = ({text, value}) => {
+    if(value != null){
+        return(
+            <View style={{flexDirection: 'row'}}>
+                <Text style={{fontWeight: 'bold'}}>{text} </Text>
+                <Text> {value}</Text>
+            </View>
+            )
+    }
+  }
+
+  const Item = ({input}) => {
+    return(
+      <TouchableOpacity 
+        onPress={() => onHistoryClick(input) }
+        style={{
+          marginTop: 10,
+          padding: 10,
+          borderRadius: 10,
+          backgroundColor: colors.background,
+        }}
+      >
+          <InputRow value={input.instalation} text={'Typ instalacji:'} />
+          <InputRow value={input.airTemperature} text={'Temperatura powietrza:'} />
+          <InputRow value={input.groundTemperature} text={'Temperatura gruntu:'} />
+          <InputRow value={input.groundResistance} text={'Rezystywność gruntu:'} />
+          <InputRow value={input.wireCount} text={'Liczba zył obciązonych:'} />
+          <InputRow value={input.metalType} text={'Metal zyły:'} />
+          <InputRow value={input.isolationType} text={'Izolacja:'} />
+          <InputRow value={input.power} text={'Moc:'} />
+          <InputRow value={input.current} text={'Prąd:'} />
+      </TouchableOpacity>
+    )
+  }
 
 
   return (
-    <View style={styles.container}>
-
-      <View style={{
-        width: '100%',
-        padding: '5%'
-      }}>
-        <Text style={{color: colors.grey_d}}>Twoje ostatnie zgłoszenia</Text>
-      </View>
+    <View style={{
+      width: '100%',
+      alignItems: 'center',
+    }}>
       <View style={{
         width:'100%',
+        padding: '5%'
       }}>
         <FlatList
           data={history}
-          renderItem={({item}) => <Issue item={item} />}
+          renderItem={({item}) => <Item input={item} />}
           keyExtractor={item => item.id}
         />
       </View>
