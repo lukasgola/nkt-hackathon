@@ -238,19 +238,19 @@ numberOfWiresMap.set("b","układ trójfazowy wielożyłowy (trzy żyły obciąż
 numberOfWiresMap.set("c","układ trójfazowy jednożyłowy (trzy żyły obciążone)")
 
 // air temperature
-let temperatureAir = 40
+let temperatureAir = null
 
 // ground temperature
 let temperatureGround = null
 
 // phase number from number of wires
-let fazNumber = numberOfWires == "a" ? 1 : 3
+let fazNumber = null
 
 // power if user input
 let power = null
 
 // current if user input
-let iobl = 486
+let iobl = null
 
 // resistance ground
 let resistanceGround = null
@@ -258,7 +258,7 @@ let resistanceGround = null
 
 // calculate current if power was inputed
 if(power != null){
-    if(fazNumber == 1){
+    if(fazNumber == 'Układ jednofazowy (dwie zyły obiązone), liczba zył 3' ){
         iobl = i1f(power)
     }else{
         iobl = i3f(power)
@@ -348,7 +348,9 @@ async function setCorrection(doc1, index){
 }
 
 // get all data from wire collection which meet parameters
-export async function getDataFromWires(installationType, temperatureAir, numberOfWires, typeOfWire, isolationType, power, iobl ){
+export async function getDataFromWires(installationType, temperatureAir, numberOfWires, typeOfWire, isolationType, power, iobl, temperatureOfGround, resistanceGround ){
+    const cables = [];
+    console.log("cables:" + cables)
     let querySnapshot
     try{
 
@@ -425,10 +427,48 @@ export async function getDataFromWires(installationType, temperatureAir, numberO
         let idP = objects[key].idP
         let powerValues = await getPowerParameters(idP)
         let maxPower = await getMaxPowerValue(powerValues, iost)
-        console.log("Cable type ", objects[key].name, " power ", maxPower.power, " intersecion ", maxPower.intersection, " iost ", iost, " correction ", objCorrection[index], " number of wires ", numberOfWiresMap.get(numberOfWires))
+        const cable = {
+          id: key,
+          cableType: objects[key].name,
+          fazNumber: fazNumber,
+          intersection: maxPower.intersection
+        }
+        cables.push(cable);
+        //console.log("Cable type ", objects[key].name, " power ", maxPower.power, " intersecion ", maxPower.intersection, " iost ", iost, " correction ", objCorrection[index], " number of wires ", numberOfWiresMap.get(numberOfWires))
         index++
     }
+    return cables
 }
 // parameters from user input
-console.log("User parameters: ",typeOfWire ," ", installationType ," ", numberOfWires ," ", temperatureAir ," ", temperatureGround ," ", power ," ", power ," ", iobl ," ", resistanceGround)
+
+}
+
+
+export async function setGlobalValues(installationType, tempAir, nOfWires, typeOfWire, isolationType, power, iobl, groundTemp, groundRes) {
+  // number of wires
+numberOfWires = nOfWires
+
+// air temperature
+temperatureAir = tempAir
+
+// ground temperature
+temperatureGround = groundTemp
+
+// phase number from number of wires
+fazNumber = nOfWires == "a" ?
+'Układ jednofazowy (dwie zyły obiązone), liczba zył 3' : 
+(nOfWires == "b" ? 
+"układ trójfazowy wielożyłowy (trzy żyły obciążone), liczba zył 4/5" :
+"układ trójfazowy wielożyłowy (trzy żyły obciążone), liczba zył 1"),
+
+// power if user input
+power = power
+
+// current if user input
+iobl = iobl
+
+// resistance ground
+resistanceGround = groundRes
+
+objects = []
 }

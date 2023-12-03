@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TouchableOpacity, View, Animated, TextInput, ScrollView, DrawerLayoutAndroidComponent } from 'react-native';
 
@@ -15,7 +15,7 @@ import Slider from '@react-native-community/slider';
 import Toast from 'react-native-toast-message';
 
 
-import { getDataFromWires } from '../firebase/firebase-config';
+import { getDataFromWires, setGlobalValues } from '../firebase/firebase-config';
 
 
 export default function Home({navigation}) {
@@ -157,16 +157,19 @@ export default function Home({navigation}) {
 
     const onSubmit = async () => {
       if(instalation.id && wireCount.id && metalType && isolationType && valueType){
-        console.log("instalacja: " + instalation.title)
-          console.log("temp powietrze: " + airTemp)
-          console.log("wireCount:" + wireCount.title)
-          console.log("metal type:" + metalType)
-          console.log("isolationType: " + isolationType)
-          console.log("moc: " + (valueType == "power" ? power : current))
+
         if (valueType == "power"){
-          await getDataFromWires(instalation.title, airTemp, wireCount.title, metalType, isolationType, power, null)
+          setGlobalValues(instalation.title, airTemp, wireCount.title, metalType, isolationType, power, null, groundTemp, groundRes)
+          const result = await getDataFromWires(instalation.title, airTemp, wireCount.title, metalType, isolationType, power, null, groundTemp, groundRes)
+          //console.log(result)
+          onAirClick();
+          navigation.navigate('CableResult', {cables: result});
         } else {
-          await getDataFromWires(instalation.title, airTemp, wireCount.title, metalType, isolationType, null, current)
+          setGlobalValues(instalation.title, airTemp, wireCount.title, metalType, isolationType, null, current, groundTemp, groundRes)
+          const result = await getDataFromWires(instalation.title, airTemp, wireCount.title, metalType, isolationType, null, current, groundTemp, groundRes)
+          //console.log(result)
+          onAirClick();
+          navigation.navigate('CableResult', {cables: result});
         }
         
         

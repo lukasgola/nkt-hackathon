@@ -84,7 +84,6 @@ export default function Issues({navigation}) {
     const focusHandler = navigation.addListener('focus', () => {
         getIssues();
     });
-    console.log(currentLocation)
     return focusHandler;
     
 }, [navigation]);

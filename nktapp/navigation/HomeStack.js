@@ -2,10 +2,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
+import { useTheme } from '../theme/ThemeProvider';
 
 import Home from '../src/Home';
 import ChooseScreen from '../src/ChooseScreen';
-import { useTheme } from '../theme/ThemeProvider';
+import CableResult from '../src/CableResult';
+
+
 
 export default function HomeStack() {
 
@@ -22,6 +25,7 @@ export default function HomeStack() {
     >
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="ChooseScreen" component={ChooseScreen} />
+        <Stack.Screen name="CableResult" component={CableResult} />
     </Stack.Navigator>
   );
 }
