@@ -20,7 +20,6 @@ export default function ChooseScreen({route, navigation}) {
 
 
     const Item = ({item}) => {
-        console.log(item)
         return(
             <TouchableOpacity 
                 style={{

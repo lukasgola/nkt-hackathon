@@ -16,7 +16,7 @@ import {
 
 //Firestore
 import { getFirestore } from "firebase/firestore";
-import { collection, setDoc, getDoc, addDoc, doc, updateDoc, deleteDoc } from "firebase/firestore"; 
+import { collection, setDoc, getDoc, getDocs, addDoc, doc, updateDoc, query, where } from "firebase/firestore"; 
 
 //Storage
 import { getStorage, ref, getDownloadURL, uploadBytes, uploadBytesResumable, } from "firebase/storage";
@@ -24,12 +24,12 @@ import { getStorage, ref, getDownloadURL, uploadBytes, uploadBytesResumable, } f
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyC-N4BgP9SDgGw2bMO_ai27e5x8ELB1siU",
-  authDomain: "test-nkt.firebaseapp.com",
-  projectId: "test-nkt",
-  storageBucket: "test-nkt.appspot.com",
-  messagingSenderId: "377113390499",
-  appId: "1:377113390499:web:2fc9c502b6b7205825fe16"
+  apiKey: "AIzaSyB-Q3tWKUfVkRTfKJ1XCT6C_3I2b7aDqJM",
+  authDomain: "nkt-hackathon.firebaseapp.com",
+  projectId: "nkt-hackathon",
+  storageBucket: "nkt-hackathon.appspot.com",
+  messagingSenderId: "393378212269",
+  appId: "1:393378212269:web:335b407034a028148c9924"
 };
 
 // Initialize Firebase
@@ -62,21 +62,6 @@ export async function signInWithEmail (email, password){
 }
 
 
-export async function createUserWithEmail (username, email, password){
-  return createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in 
-            verifyEmail();
-            adduser(userCredential.user.uid, email, username, null)
-        })
-        .catch((error) => {
-            console.log('error: ', error.message)
-            // ..
-        });
-    
-}
-
-
 export async function forgotPassword(email){
   return sendPasswordResetEmail(auth, email)
         .then(() => {
@@ -90,17 +75,6 @@ export async function forgotPassword(email){
         });
 }    
 
-
-async function verifyEmail(){
-
-  return sendEmailVerification(auth.currentUser)
-  .then(function() {
-    // Verification email sent.
-  })
-  .catch(function(error) {
-    // Error occurred. Inspect error.code.
-  });
-}
 
 
 export async function adduser(uid, email, username, avatar){
@@ -153,36 +127,6 @@ export async function addEvent(event){
   }
 }
 
-export async function setLikeParty(id, organizer, likes, mode){
-  if(mode == "add") {
-    try {
-      await setDoc(doc(db, `users/${auth.currentUser.uid}/liked`, id), {
-        partyID: id
-      })
-
-      await updateDoc(doc(db, `users/${organizer}/parties`, id), {
-        likes: likes
-      });
-    
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  } else {
-    try {
-      await deleteDoc(doc(db, `users/${auth.currentUser.uid}/liked`, id), {
-        partyID: id
-      })
-
-      await updateDoc(doc(db, `users/${organizer}/parties`, id), {
-        likes: likes
-      });
-      
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  }
-  
-}
 
 export async function addIssue(event){
   try {
@@ -245,4 +189,246 @@ export async function uploadImage(uid, avatar) {
     }
   );
   })
+}
+
+///////////////////////////////////
+
+  // correction of found objects
+  let objCorrection = []
+
+// const voltage for 1 phase
+const Uf = 230
+
+// const voltage for 3 phase
+const Un = 400
+
+// const cosinus value for 1 phase
+const cos1f = 0.9
+
+//const cosinus value fro 3 phase
+const cos3f = 0.75
+
+let objects = []
+
+// calculate current for 1 phase
+let i1f = (power) => {
+    return power/(Uf*cos1f)
+}
+
+// calculate current for 3 phase
+let i3f = (power) => {
+    return power/(Math.sqrt(3)*Un*cos3f)
+}
+
+///form data
+
+// wire type
+let typeOfWire = "Cu"
+
+// instalation type
+let installationType = "A1"
+
+// number of wires
+let numberOfWires = "a"
+
+// map number of wires descriptions
+let numberOfWiresMap = new Map()
+numberOfWiresMap.set("a","układ jednofazowy (dwie żyły obciążone)")
+numberOfWiresMap.set("b","układ trójfazowy wielożyłowy (trzy żyły obciążone)")
+numberOfWiresMap.set("c","układ trójfazowy jednożyłowy (trzy żyły obciążone)")
+
+// air temperature
+let temperatureAir = 40
+
+// ground temperature
+let temperatureGround = null
+
+// phase number from number of wires
+let fazNumber = numberOfWires == "a" ? 1 : 3
+
+// power if user input
+let power = null
+
+// current if user input
+let iobl = 486
+
+// resistance ground
+let resistanceGround = null
+///end form data
+
+// calculate current if power was inputed
+if(power != null){
+    if(fazNumber == 1){
+        iobl = i1f(power)
+    }else{
+        iobl = i3f(power)
+    }
+}
+
+// get power parameters from parameters collection
+async function getPowerParameters(param){
+    const docRef = doc(db, "parameters", param.toString());
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+        return docSnap.data()
+      } else {
+        // docSnap.data() will be undefined in this case
+        console.log("No such document!");
+        return {"0":0, "1":1}
+      }
+}
+
+// get max power (current) value for iost (calculated current)
+function getMaxPowerValue(powerValues, iost){ 
+    let max = powerValues.power[0]
+    let intersection = powerValues.intersectios[0]
+    for(value in powerValues.power){
+        if(powerValues.power[value] <= iost && powerValues.power[value] > max){
+            max = powerValues.power[value]
+            intersection = powerValues.intersectios[value]
+        }
+    }
+    return {"power":max, "intersection":intersection}
+}
+
+// get and calculate correct parameter for ground cables
+async function getGroundParameters(param, index){
+    let corr = {"resistance":0, "ground":0}
+    const docRef = doc(db, "rateGround", param.idR.toString());
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+        for(key in obj = docSnap.data().resistanceGround){
+            if(obj[key] == resistanceGround){
+                objCorrection[index] *= docSnap.data().resistanceGroundRate[key]
+                break;
+            }
+        }
+        for(key in obj = docSnap.data().temperatureGround){
+            if(obj[key] == temperatureGround){
+                objCorrection[index] *= docSnap.data().temperatureGroundRate[key]
+                break;
+            }
+        }
+      } else {
+        // docSnap.data() will be undefined in this case
+        console.log("No such document!");
+        return {"0":0, "1":1}
+      }
+}
+
+// get and calculate correct parameter for non ground cables
+async function getTemperatureAirParameters(param, index){
+    let corr = {"numberOfWires":0, "temperatureAir":0}
+    const docRef = doc(db, "rate", param.idT.toString());
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+        objCorrection[index] *= docSnap.data().numberWiresRate[0]
+        for(key in obj = docSnap.data().temperatureAirFirst){
+            if(obj[key] == temperatureAir){
+                objCorrection[index] *= docSnap.data().temperatureRateFirst[key]
+                break;
+            }
+        }
+        return docSnap.data()
+      } else {
+        // docSnap.data() will be undefined in this case
+        console.log("No such document!");
+        return {"0":0, "1":1}
+      }
+}
+
+// chose which correction to set
+async function setCorrection(doc1, index){
+    if(doc1.idR != null){
+        getGroundParameters(doc1, index)
+    }
+    if (doc1.idT != null){
+        getTemperatureAirParameters(doc1, index)
+    }
+}
+
+// get all data from wire collection which meet parameters
+export async function getDataFromWires(installationType, temperatureAir, numberOfWires, typeOfWire, isolationType, power, iobl ){
+    let querySnapshot
+    try{
+
+    const q = query(collection(db, "wires"), 
+    where("typeOfWire", "==", typeOfWire), 
+    where("numberOfWires", "==", numberOfWires), 
+    where("installationType", "==", installationType),
+    where("temperatureAir", ">=", 10),
+    where("temperatureAir", "<=", 80)
+    );
+    querySnapshot = await getDocs(q);   
+    }
+    catch(e){
+        querySnapshot = null
+        console.log("No results found!")
+        console.log(e)
+    }
+    if(querySnapshot != null){
+    // prepare correct table
+    querySnapshot.forEach(async(doc1) => {
+      // doc.data() is never undefined for query doc snapshots
+      objCorrection.push(1.0)
+      if(doc1.data().idT != null){
+      if(doc1.data().name == "YDY" || doc1.data().name == "YDYp" || doc1.data().name == "YKY"){
+        if(temperatureAir <= 60 && temperatureAir >= 10){
+            objects.push(doc1.data())
+        }
+      }
+      else{
+        if(temperatureAir <= 80 && temperatureAir >= 10){
+            objects.push(doc1.data())
+        }
+      }
+    }else{
+        if(doc1.data().groundResistance >= 0.5 && doc1.data().groundResistance <= 3){
+        if(doc1.data().name == "YKY"){
+            if(temperatureOfGround <= 60 && temperatureOfGround >= 10){
+                objects.push(doc1.data())
+            }
+          } 
+          else{
+            if(temperatureOfGround <= 80 && temperatureOfGround >= 10){
+                objects.push(doc1.data())
+            }
+          }
+        }
+    }
+
+    });
+    let index = 0
+
+    // set correction for each object
+    // querySnapshot.forEach(async(doc1) => {
+    //     setCorrection(doc1.data(), index)
+    //     index++
+    // });
+    for(let key = 0; key < objects.length;key++){
+        setCorrection(objects[key], index)
+        index++
+    }
+    index = 0
+
+    // calculate iost (current) and show data to user
+    // querySnapshot.forEach(async(doc1) => {
+    //     let iost = iobl/(objCorrection[index]*0.85)
+    //     let powerValues = await getPowerParameters(doc1.data().idP)
+    //     let maxPower = await getMaxPowerValue(powerValues, iost)
+    //     console.log("Cable type ", doc1.data().name, " power ", maxPower.power, " intersecion ", maxPower.intersection, " iost ", iost, " correction ", objCorrection[index], " number of wires ", numberOfWiresMap.get(numberOfWires))
+    //     index++
+    // });
+    
+    for(let key = 0; key<objects.length; key++){
+        let iost = iobl/(objCorrection[index]*0.85)
+        let idP = objects[key].idP
+        let powerValues = await getPowerParameters(idP)
+        let maxPower = await getMaxPowerValue(powerValues, iost)
+        console.log("Cable type ", objects[key].name, " power ", maxPower.power, " intersecion ", maxPower.intersection, " iost ", iost, " correction ", objCorrection[index], " number of wires ", numberOfWiresMap.get(numberOfWires))
+        index++
+    }
+}
+// parameters from user input
+console.log("User parameters: ",typeOfWire ," ", installationType ," ", numberOfWires ," ", temperatureAir ," ", temperatureGround ," ", power ," ", power ," ", iobl ," ", resistanceGround)
 }

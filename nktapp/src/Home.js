@@ -15,6 +15,8 @@ import Slider from '@react-native-community/slider';
 import Toast from 'react-native-toast-message';
 
 
+import { getDataFromWires } from '../firebase/firebase-config';
+
 
 export default function Home({navigation}) {
 
@@ -67,17 +69,17 @@ export default function Home({navigation}) {
   const wiresCount = [
     {
       id: 1,
-      title: 'A',
+      title: 'a',
       desc: 'Układ jednofazowy (dwie zyły obciązone)'
     },
     {
       id: 2,
-      title: 'B',
+      title: 'b',
       desc: 'Układ trójfazowy wielozyłowy (trzy zyły obiązone)'
     },
     {
       id: 3,
-      title: 'C',
+      title: 'c',
       desc: 'Układ trójfazowy jednozyłowy (trzy zyły obciązone)'
     }
   ]
@@ -153,10 +155,21 @@ export default function Home({navigation}) {
     }
 
 
-    const onSubmit = () => {
+    const onSubmit = async () => {
       if(instalation.id && wireCount.id && metalType && isolationType && valueType){
-
-        console.log('hurra')
+        console.log("instalacja: " + instalation.title)
+          console.log("temp powietrze: " + airTemp)
+          console.log("wireCount:" + wireCount.title)
+          console.log("metal type:" + metalType)
+          console.log("isolationType: " + isolationType)
+          console.log("moc: " + (valueType == "power" ? power : current))
+        if (valueType == "power"){
+          await getDataFromWires(instalation.title, airTemp, wireCount.title, metalType, isolationType, power, null)
+        } else {
+          await getDataFromWires(instalation.title, airTemp, wireCount.title, metalType, isolationType, null, current)
+        }
+        
+        
       } else {
         showErrorToast()
         console.log('error')
@@ -542,17 +555,17 @@ export default function Home({navigation}) {
               width: '47.5%',
               height: '100%',
               backgroundColor: colors.grey_l,
-              borderColor: valueType == "Moc" ? colors.primary : colors.grey_l,
+              borderColor: valueType == "power" ? colors.primary : colors.grey_l,
               borderWidth: 2,
               borderRadius: 10,
               alignItems: 'center',
               justifyContent: 'center'
             }}
-            onPress={() => setValueType('Moc')}
+            onPress={() => setValueType('power')}
           >
             <Text style={{
-              color: valueType == "Moc" ? colors.primary : colors.grey_d,
-              fontWeight: valueType == "Moc" ? 'bold' : 'regular',
+              color: valueType == "power" ? colors.primary : colors.grey_d,
+              fontWeight: valueType == "power" ? 'bold' : 'regular',
             }}>Moc</Text>
           </TouchableOpacity>
           <TouchableOpacity 
@@ -594,18 +607,18 @@ export default function Home({navigation}) {
               textAlign: 'center',
               fontSize: 24
             }}
-            onChangeText={valueType == "Moc" ? setPower : setCurrent}
-            value={valueType == "Moc" ? power : current}
+            onChangeText={valueType == "power" ? setPower : setCurrent}
+            value={valueType == "power" ? power : current}
             keyboardType="numeric"
           />
           <Slider
             style={{width: '80%', height: 40, marginTop: 20}}
             minimumValue={10}
-            maximumValue={80}
+            maximumValue={500}
             minimumTrackTintColor={colors.primary}
             maximumTrackTintColor={colors.grey}
             value={power}
-            onValueChange={(value) => valueType == "Moc" ? setPower(value.toFixed(0).toString()) : setCurrent(value.toFixed(0).toString())}
+            onValueChange={(value) => valueType == "power" ? setPower(value.toFixed(0).toString()) : setCurrent(value.toFixed(0).toString())}
           />
         </View>
       </View>
