@@ -13,11 +13,26 @@ export default function IssueStack() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerTintColor: colors.primary
+        headerTintColor: colors.primary,
+        headerTitleStyle:{
+          color: colors.text
+        }
       }}
     >
-        <Stack.Screen name="Issues" component={Issues} />
-        <Stack.Screen name="IssueRequest" component={IssueRequest} />
+        <Stack.Screen 
+          name="Issues" 
+          component={Issues} 
+          options={{
+            headerTitle: 'Usterki'
+          }}
+        />
+        <Stack.Screen 
+          name="IssueRequest" 
+          component={IssueRequest} 
+          options={{
+            headerTitle: 'Zgłoś usterkę'
+          }}
+        />
     </Stack.Navigator>
   );
 }

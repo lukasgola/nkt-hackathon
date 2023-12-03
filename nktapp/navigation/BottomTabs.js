@@ -61,27 +61,33 @@ export default function BottomTabs() {
                 tabBarIcon: ({focused}) => (
                     <Item focused={focused} icon='home-outline' filled='home' title='Home' />
                 ),
-                headerShown: false
+                headerShown: false,
+                tabBarLabel: 'Oblicz'
                 
         }}/>
       <Tab.Screen name="History" component={History} options={{
                 tabBarIcon: ({focused}) => (
                     <Item focused={focused} icon='file-tray-full-outline' filled='file-tray-full' title='Home' />
                 ),
+                tabBarLabel: 'Historia',
+                headerTitle: 'Historia'
                 
                 
         }}/>
       <Tab.Screen name="IssuesStack" component={IssueStack} options={{
                 tabBarIcon: ({focused}) => (
-                    <Item focused={focused} icon='alert-outline' filled='alert' title='Home' />
+                    <Item focused={focused} icon='construct-outline' filled='construct' title='Home' />
                 ),
-                headerShown: false
+                headerShown: false,
+                tabBarLabel: 'Usterki'
                 
         }}/>
         <Tab.Screen name="Profile" component={Profile} options={{
                     tabBarIcon: ({focused}) => (
                         <Item focused={focused} icon='person-outline' filled='person' title='Home' />
                     ),
+                    tabBarLabel: 'Profil',
+                    headerTitle: 'Profil'
                     
             }}/>
     </Tab.Navigator>

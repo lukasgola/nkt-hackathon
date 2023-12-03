@@ -14,7 +14,10 @@ export default function HomeStack() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerTintColor: colors.primary
+        headerTintColor: colors.primary,
+        headerTitleStyle:{
+          color: colors.text
+        }
       }}
     >
         <Stack.Screen name="Home" component={Home} />
