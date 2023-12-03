@@ -224,9 +224,9 @@ export default function Home({navigation}) {
           style={{
             width: '47.5%',
             height: '100%',
-            backgroundColor: colors.grey_l,
-            borderColor: instalationType == "Powietrze" ? colors.primary : colors.grey_l,
-            borderWidth: 2,
+            backgroundColor: instalationType == "Powietrze" ? colors.primary : colors.grey_l,
+            //borderColor: instalationType == "Powietrze" ? colors.primary : colors.grey_l,
+            //borderWidth: 2,
             borderRadius: 10,
             alignItems: 'center',
             justifyContent: 'center'
@@ -234,7 +234,7 @@ export default function Home({navigation}) {
           onPress={() => onAirClick()}
         >
           <Text style={{
-            color: instalationType == "Powietrze" ? colors.primary : colors.grey_d,
+            color: instalationType == "Powietrze" ? colors.background : colors.grey_d,
             fontWeight: instalationType == "Powietrze" ? 'bold' : 'regular',
           }}>Powietrze</Text>
         </TouchableOpacity>
@@ -242,9 +242,9 @@ export default function Home({navigation}) {
           style={{
             width: '47.5%',
             height: '100%',
-            backgroundColor: colors.grey_l,
-            borderColor: instalationType == "Grunt" ? colors.primary : colors.grey_l,
-            borderWidth: 2,
+            backgroundColor: instalationType == "Grunt" ? colors.primary : colors.grey_l,
+            //borderColor: instalationType == "Grunt" ? colors.primary : colors.grey_l,
+            //borderWidth: 2,
             borderRadius: 10,
             alignItems: 'center',
             justifyContent: 'center'
@@ -252,7 +252,7 @@ export default function Home({navigation}) {
           onPress={() => onGroundClick()}
         >
           <Text style={{
-            color: instalationType == "Grunt" ? colors.primary : colors.grey_d,
+            color: instalationType == "Grunt" ? colors.background : colors.grey_d,
             fontWeight: instalationType == "Grunt" ? 'bold' : 'regular',
           }}>Grunt</Text>
         </TouchableOpacity>
@@ -451,9 +451,9 @@ export default function Home({navigation}) {
             style={{
               width: '47.5%',
               height: '100%',
-              backgroundColor: colors.grey_l,
-              borderColor: metalType == "Al" ? colors.primary : colors.grey_l,
-              borderWidth: 2,
+              backgroundColor: metalType == "Al" ? colors.primary : colors.grey_l,
+              //borderColor: metalType == "Al" ? colors.primary : colors.grey_l,
+              //borderWidth: 2,
               borderRadius: 10,
               alignItems: 'center',
               justifyContent: 'center'
@@ -461,7 +461,7 @@ export default function Home({navigation}) {
             onPress={() => setMetalType('Al')}
           >
             <Text style={{
-              color: metalType == "Al" ? colors.primary : colors.grey_d,
+              color: metalType == "Al" ? colors.background : colors.grey_d,
               fontWeight: metalType == "Al" ? 'bold' : 'regular',
             }}>Al</Text>
           </TouchableOpacity>
@@ -469,9 +469,9 @@ export default function Home({navigation}) {
             style={{
               width: '47.5%',
               height: '100%',
-              backgroundColor: colors.grey_l,
-              borderColor: metalType == "Cu" ? colors.primary : colors.grey_l,
-              borderWidth: 2,
+              backgroundColor: metalType == "Cu" ? colors.primary : colors.grey_l,
+              //borderColor: metalType == "Cu" ? colors.primary : colors.grey_l,
+              //borderWidth: 2,
               borderRadius: 10,
               alignItems: 'center',
               justifyContent: 'center'
@@ -479,7 +479,7 @@ export default function Home({navigation}) {
             onPress={() => setMetalType('Cu')}
           >
             <Text style={{
-              color: metalType == "Cu" ? colors.primary : colors.grey_d,
+              color: metalType == "Cu" ? colors.background : colors.grey_d,
               fontWeight: metalType == "Cu" ? 'bold' : 'regular',
             }}>Cu</Text>
           </TouchableOpacity>
@@ -503,9 +503,9 @@ export default function Home({navigation}) {
             style={{
               width: '30%',
               height: '100%',
-              backgroundColor: colors.grey_l,
-              borderColor: isolationType == "PVC" ? colors.primary : colors.grey_l,
-              borderWidth: 2,
+              backgroundColor: isolationType == "PVC" ? colors.primary : colors.grey_l,
+              //borderColor: isolationType == "PVC" ? colors.primary : colors.grey_l,
+              //borderWidth: 2,
               borderRadius: 10,
               alignItems: 'center',
               justifyContent: 'center'
@@ -513,7 +513,7 @@ export default function Home({navigation}) {
             onPress={() => setIsolationType('PVC')}
           >
             <Text style={{
-              color: isolationType == "PVC" ? colors.primary : colors.grey_d,
+              color: isolationType == "PVC" ? colors.background : colors.grey_d,
               fontWeight: isolationType == "PVC" ? 'bold' : 'regular',
             }}>PVC</Text>
           </TouchableOpacity>
@@ -521,9 +521,9 @@ export default function Home({navigation}) {
             style={{
               width: '30%',
               height: '100%',
-              backgroundColor: colors.grey_l,
-              borderColor: isolationType == "XLPE" ? colors.primary : colors.grey_l,
-              borderWidth: 2,
+              backgroundColor: isolationType == "XLPE" ? colors.primary : colors.grey_l,
+              //borderColor: isolationType == "PVC" ? colors.primary : colors.grey_l,
+              //borderWidth: 2,
               borderRadius: 10,
               alignItems: 'center',
               justifyContent: 'center'
@@ -531,7 +531,7 @@ export default function Home({navigation}) {
             onPress={() => setIsolationType('XLPE')}
           >
             <Text style={{
-              color: isolationType == "XLPE" ? colors.primary : colors.grey_d,
+              color: isolationType == "XLPE" ? colors.background : colors.grey_d,
               fontWeight: isolationType == "XLPE" ? 'bold' : 'regular',
             }}>XLPE</Text>
           </TouchableOpacity>
@@ -539,9 +539,9 @@ export default function Home({navigation}) {
             style={{
               width: '30%',
               height: '100%',
-              backgroundColor: colors.grey_l,
-              borderColor: isolationType == "B2ca" ? colors.primary : colors.grey_l,
-              borderWidth: 2,
+              backgroundColor: isolationType == "B2ca" ? colors.primary : colors.grey_l,
+              //borderColor: isolationType == "PVC" ? colors.primary : colors.grey_l,
+              //borderWidth: 2,
               borderRadius: 10,
               alignItems: 'center',
               justifyContent: 'center'
@@ -549,7 +549,7 @@ export default function Home({navigation}) {
             onPress={() => setIsolationType('B2ca')}
           >
             <Text style={{
-              color: isolationType == "B2ca" ? colors.primary : colors.grey_d,
+              color: isolationType == "B2ca" ? colors.background : colors.grey_d,
               fontWeight: isolationType == "B2ca" ? 'bold' : 'regular',
             }}>B2ca</Text>
           </TouchableOpacity>
@@ -572,9 +572,9 @@ export default function Home({navigation}) {
             style={{
               width: '47.5%',
               height: '100%',
-              backgroundColor: colors.grey_l,
-              borderColor: valueType == "power" ? colors.primary : colors.grey_l,
-              borderWidth: 2,
+              backgroundColor: valueType == "power" ? colors.primary : colors.grey_l,
+              //borderColor: valueType == "power" ? colors.primary : colors.grey_l,
+              //borderWidth: 2,
               borderRadius: 10,
               alignItems: 'center',
               justifyContent: 'center'
@@ -582,7 +582,7 @@ export default function Home({navigation}) {
             onPress={() => setValueType('power')}
           >
             <Text style={{
-              color: valueType == "power" ? colors.primary : colors.grey_d,
+              color: valueType == "power" ? colors.background : colors.grey_d,
               fontWeight: valueType == "power" ? 'bold' : 'regular',
             }}>Moc</Text>
           </TouchableOpacity>
@@ -590,9 +590,9 @@ export default function Home({navigation}) {
             style={{
               width: '47.5%',
               height: '100%',
-              backgroundColor: colors.grey_l,
-              borderColor: valueType == "current" ? colors.primary : colors.grey_l,
-              borderWidth: 2,
+              backgroundColor: valueType == "current" ? colors.primary : colors.grey_l,
+              //borderColor: valueType == "current" ? colors.primary : colors.grey_l,
+              //borderWidth: 2,
               borderRadius: 10,
               alignItems: 'center',
               justifyContent: 'center'
@@ -600,8 +600,8 @@ export default function Home({navigation}) {
             onPress={() => setValueType('current')}
           >
             <Text style={{
-              color: valueType == "Prąd" ? colors.primary : colors.grey_d,
-              fontWeight: valueType == "Prąd" ? 'bold' : 'regular',
+              color: valueType == "current" ? colors.background : colors.grey_d,
+              fontWeight: valueType == "current" ? 'bold' : 'regular',
             }}>Prąd</Text>
           </TouchableOpacity>
         </View>
