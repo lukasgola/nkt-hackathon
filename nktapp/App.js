@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
 
 //Providers
 import { ThemeProvider } from './theme/ThemeProvider';
@@ -31,17 +32,21 @@ export default function App() {
   }, [])
 
   return (
+    <>
     <NavigationContainer>
       <ThemeProvider>
         <CurrentUserProvider>
           <InstalationProvider>
             <WireCountProvider>
-            {isUser ? <BottomTabs /> : <LoginStack/> }
+            
+            {isUser ? <BottomTabs/> : <LoginStack/> }
             </WireCountProvider>
           </InstalationProvider>
         </CurrentUserProvider>
       </ThemeProvider>
     </NavigationContainer>
+    <Toast/>
+    </>
   );
 }
 

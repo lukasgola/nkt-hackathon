@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TouchableOpacity, View, Animated, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Animated, TextInput, ScrollView, DrawerLayoutAndroidComponent } from 'react-native';
 
 //Providers
 import { useTheme } from '../theme/ThemeProvider';
@@ -12,6 +12,7 @@ import { useWireCount } from '../providers/WireCountProvider';
 import {Picker} from '@react-native-picker/picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Slider from '@react-native-community/slider';
+import Toast from 'react-native-toast-message';
 
 
 
@@ -88,7 +89,7 @@ export default function Home({navigation}) {
     //Typ instalacji
     const [instalationType, setInstalationType] = useState("Powietrze");
     const [instalationCollection, setInstalationCollection] = useState(instalationsAir);
-    const [instalationString, setInstalationString] = useState();
+    const [instalationString, setInstalationString] = useState('');
 
     //Temperatura
     const [airTemp, setAirTemp] = useState('30');
@@ -96,31 +97,21 @@ export default function Home({navigation}) {
     const [groundTemp, setGroundTemp] = useState('30')
     const [groundRes, setGroundRes] = useState('1.0')
 
-    const [wireCountString, setWireCountString] = useState();
+    const [wireCountString, setWireCountString] = useState('');
 
 
-    const [metalType, setMetalType] = useState("Al")
-    const [isolationType, setIsolationType] = useState("PVC")
+    const [metalType, setMetalType] = useState(null)
+    const [isolationType, setIsolationType] = useState(null)
+
+
+    const [valueType, setValueType] = useState(null);
+
+    const [power, setPower] = useState('5');
+    const [current, setCurrent] = useState('5');
 
 
     const isFocused = useIsFocused();
 
-    const extendValue = useRef(new Animated.Value(0)).current;
-
-    function extend(){
-      Animated.timing(extendValue,{
-          toValue: 40,
-          duration: 200,
-          useNativeDriver: false
-      }).start()
-    } 
-    function fold(){
-        Animated.timing(extendValue,{
-            toValue: 0,
-            duration: 100,
-            useNativeDriver: false
-        }).start()
-    } 
 
     const InputCategory = (props) => {
       return(
@@ -153,13 +144,31 @@ export default function Home({navigation}) {
       setIsolationType(null)
     }
 
+    const showToast = () => {
+      Toast.show({
+        type: 'success',
+        text1: 'Hello',
+        text2: 'This is some something 👋'
+      });
+    }
+
+
+    const onSubmit = () => {
+      if(instalation.id && wireCount.id && metalType && isolationType && valueType){
+        showToast()
+        console.log('hurra')
+      } else {
+        console.log('error')
+      }
+    }
+
 
     useEffect(() => {
       if(instalation.id){
           setInstalationString(instalation.title)
       }
-      if(wireCount?.id){
-        setWireCountString(wireCount?.title)
+      if(wireCount.id){
+        setWireCountString(wireCount.title)
       }
   }, [isFocused])
     
@@ -235,7 +244,7 @@ export default function Home({navigation}) {
               borderWidth: 2,
               borderColor: instalation.id ? colors.primary : colors.grey_l
             }}
-            onPress={() => navigation.navigate('ChooseScreen', {data: instalationCollection, setMode: setInstalation })}
+            onPress={() => navigation.navigate('ChooseScreen', {data: instalationCollection, mode: instalation, setMode: setInstalation })}
           >
             <Text style={{
               color: instalation.id ? colors.primary : colors.grey_d,
@@ -254,7 +263,7 @@ export default function Home({navigation}) {
         <View style={{
           width: '100%',
           alignItems: 'center',
-          marginTop: 30
+          marginTop: 20
         }}>
           <TextInput
             style={{
@@ -270,11 +279,11 @@ export default function Home({navigation}) {
             keyboardType="numeric"
           />
           <Slider
-            style={{width: '80%', height: 40, marginTop: 30}}
+            style={{width: '80%', height: 40, marginTop: 20}}
             minimumValue={10}
             maximumValue={80}
-            minimumTrackTintColor={colors.grey}
-            maximumTrackTintColor={colors.primary}
+            minimumTrackTintColor={colors.primary}
+            maximumTrackTintColor={colors.grey}
             value={airTemp}
             onValueChange={(value) => setAirTemp(value.toFixed(0).toString())}
           />
@@ -291,7 +300,7 @@ export default function Home({navigation}) {
             <View style={{
               width: '100%',
               alignItems: 'center',
-              marginTop: 30
+              marginTop: 20
             }}>
               <TextInput
                 style={{
@@ -307,11 +316,11 @@ export default function Home({navigation}) {
                 keyboardType="numeric"
               />
               <Slider
-                style={{width: '80%', height: 40, marginTop: 30}}
+                style={{width: '80%', height: 40, marginTop: 20}}
                 minimumValue={10}
                 maximumValue={80}
-                minimumTrackTintColor={colors.grey}
-                maximumTrackTintColor="#000000"
+                minimumTrackTintColor={colors.primary}
+                maximumTrackTintColor={colors.grey}
                 value={groundTemp}
                 onValueChange={(value) => setGroundTemp(value.toFixed(0).toString())}
               />
@@ -326,7 +335,7 @@ export default function Home({navigation}) {
             <View style={{
               width: '100%',
               alignItems: 'center',
-              marginTop: 30
+              marginTop: 20
             }}>
               <TextInput
                 style={{
@@ -342,11 +351,11 @@ export default function Home({navigation}) {
                 keyboardType="numeric"
               />
               <Slider
-                style={{width: '80%', height: 40, marginTop: 30}}
+                style={{width: '80%', height: 40, marginTop: 20}}
                 minimumValue={10}
                 maximumValue={80}
-                minimumTrackTintColor={colors.grey}
-                maximumTrackTintColor="#000000"
+                minimumTrackTintColor={colors.primary}
+                maximumTrackTintColor={colors.grey}
                 value={groundRes}
                 onValueChange={(value) => setGroundRes(value.toFixed(0).toString())}
               />
@@ -381,7 +390,7 @@ export default function Home({navigation}) {
               borderWidth: 2,
               borderColor: wireCount?.id ? colors.primary : colors.grey_l
             }}
-            onPress={() => navigation.navigate('ChooseScreen', {data: wiresCount, setMode: setWireCount})}
+            onPress={() => navigation.navigate('ChooseScreen', {data: wiresCount, mode: wireCount, setMode: setWireCount})}
           >
             <Text style={{
               color: wireCount?.id ? colors.primary : colors.grey_d,
@@ -496,6 +505,111 @@ export default function Home({navigation}) {
           </TouchableOpacity>
         </View>
       </View>
+
+      <View style={{
+        width: '100%',
+        marginTop: 20,
+      }}>
+        <InputCategory text="Moc lub prąd" />
+        <View style={{
+          width: '100%',
+          height: 50,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          marginTop: 10
+        }}>
+          <TouchableOpacity 
+            style={{
+              width: '47.5%',
+              height: '100%',
+              backgroundColor: colors.grey_l,
+              borderColor: valueType == "Moc" ? colors.primary : colors.grey_l,
+              borderWidth: 2,
+              borderRadius: 10,
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+            onPress={() => setValueType('Moc')}
+          >
+            <Text style={{
+              color: valueType == "Moc" ? colors.primary : colors.grey_d,
+              fontWeight: valueType == "Moc" ? 'bold' : 'regular',
+            }}>Moc</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={{
+              width: '47.5%',
+              height: '100%',
+              backgroundColor: colors.grey_l,
+              borderColor: valueType == "Prąd" ? colors.primary : colors.grey_l,
+              borderWidth: 2,
+              borderRadius: 10,
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+            onPress={() => setValueType('Prąd')}
+          >
+            <Text style={{
+              color: valueType == "Prąd" ? colors.primary : colors.grey_d,
+              fontWeight: valueType == "Prąd" ? 'bold' : 'regular',
+            }}>Prąd</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      <View style={{
+        width: '100%',
+        paddingTop: 20,
+      }}>
+        <View style={{
+          width: '100%',
+          alignItems: 'center',
+          marginTop: 20
+        }}>
+          <TextInput
+            style={{
+              width: 80,
+              height: 60,
+              backgroundColor: colors.grey_l,
+              borderRadius: 10,
+              textAlign: 'center',
+              fontSize: 24
+            }}
+            onChangeText={valueType == "Moc" ? setPower : setCurrent}
+            value={valueType == "Moc" ? power : current}
+            keyboardType="numeric"
+          />
+          <Slider
+            style={{width: '80%', height: 40, marginTop: 20}}
+            minimumValue={10}
+            maximumValue={80}
+            minimumTrackTintColor={colors.primary}
+            maximumTrackTintColor={colors.grey}
+            value={power}
+            onValueChange={(value) => valueType == "Moc" ? setPower(value.toFixed(0).toString()) : setCurrent(value.toFixed(0).toString())}
+          />
+        </View>
+      </View>
+
+
+      <TouchableOpacity 
+        style={{
+          width: '100%',
+          height: 50,
+          backgroundColor: colors.primary,
+          borderRadius: 10,
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginTop: 20,
+          marginBottom: 50
+        }}
+        onPress={() => onSubmit()}
+      >
+        <Text style={{
+          color: colors.background,
+          fontWeight: 'bold'
+        }}>Znajdź kabel</Text>
+      </TouchableOpacity>
 
     </ScrollView>
   );

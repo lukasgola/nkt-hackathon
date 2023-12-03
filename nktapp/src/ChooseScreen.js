@@ -3,15 +3,13 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 
 import { useTheme } from '../theme/ThemeProvider';
-import { useInstalation } from '../providers/InstalationProvider';
 
 
 export default function ChooseScreen({route, navigation}) {
 
     const {colors} = useTheme();
-    const { instalation, setInstalation } = useInstalation();
 
-    const [ choice, setChoice ] = useState(instalation.id);
+    const [ choice, setChoice ] = useState(route.params.mode.id);
 
 
     const onClick = (item) => {
