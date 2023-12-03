@@ -116,6 +116,11 @@ export default function CableResult({route}) {
             data={items}
             renderItem={({item}) => <Item item={item} />}
             keyExtractor={item => item.id}
+            ListHeaderComponent={
+                <View>
+                    
+                </View>
+            }
         />
     </View>
   );

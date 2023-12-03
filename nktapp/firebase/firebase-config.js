@@ -358,8 +358,7 @@ export async function getDataFromWires(installationType, temperatureAir, numberO
     where("typeOfWire", "==", typeOfWire), 
     where("numberOfWires", "==", numberOfWires), 
     where("installationType", "==", installationType),
-    where("temperatureAir", ">=", 10),
-    where("temperatureAir", "<=", 80)
+    where("isolation", "==", isolationType)
     );
     querySnapshot = await getDocs(q);   
     }

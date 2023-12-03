@@ -158,6 +158,10 @@ export default function Home({navigation}) {
     const onSubmit = async () => {
       if(instalation.id && wireCount.id && metalType && isolationType && valueType){
 
+        const input = {
+          
+        }
+
         if (valueType == "power"){
           setGlobalValues(instalation.title, airTemp, wireCount.title, metalType, isolationType, power, null, groundTemp, groundRes)
           const result = await getDataFromWires(instalation.title, airTemp, wireCount.title, metalType, isolationType, power, null, groundTemp, groundRes)
