@@ -144,20 +144,21 @@ export default function Home({navigation}) {
       setIsolationType(null)
     }
 
-    const showToast = () => {
+    const showErrorToast = () => {
       Toast.show({
-        type: 'success',
-        text1: 'Hello',
-        text2: 'This is some something 👋'
+        type: 'error',
+        text1: 'Brakujące pola',
+        text2: 'Wypełnij dokładnie formularz'
       });
     }
 
 
     const onSubmit = () => {
       if(instalation.id && wireCount.id && metalType && isolationType && valueType){
-        showToast()
+
         console.log('hurra')
       } else {
+        showErrorToast()
         console.log('error')
       }
     }
