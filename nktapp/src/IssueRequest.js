@@ -14,7 +14,7 @@ import { manipulateAsync, FlipType, SaveFormat } from 'expo-image-manipulator';
 
 
 //Firebase
-import { auth, uploadImage, addQuickAction } from '../firebase/firebase-config';
+import { auth, uploadImage, addQuickAction } from '../firebase/firebase-config'; 
 
 export default function QuickAction({navigation}) {
 
@@ -33,12 +33,12 @@ export default function QuickAction({navigation}) {
     const onCreateQuickEvent = async data => {
         Alert.alert('Nowa Usterka', 'Czy chcesz wysłać nową usterkę', [
         {
-            text: 'Cancel',
+            text: 'Anuluj',
             onPress: () => {},
             style: 'cancel',
         },
         {
-            text: 'Yes',
+            text: 'Tak',
             onPress: async () => {
                 try {
                     setIsSending(true)
@@ -46,7 +46,7 @@ export default function QuickAction({navigation}) {
                     const url = await uploadImage(auth.currentUser.uid, image)
                     const event = {
                         image: url.downloadURL,
-                        desc: description == undefined ? '' : description
+                        desc: description == undefined ? '' : description,
                     }
                     await addQuickAction(event);
                     setIsSending(false)
