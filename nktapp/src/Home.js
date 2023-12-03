@@ -617,7 +617,7 @@ export default function Home({navigation}) {
             maximumValue={500}
             minimumTrackTintColor={colors.primary}
             maximumTrackTintColor={colors.grey}
-            value={power}
+            value={valueType == "power" ? power : current}
             onValueChange={(value) => valueType == "power" ? setPower(value.toFixed(0).toString()) : setCurrent(value.toFixed(0).toString())}
           />
         </View>
