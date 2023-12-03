@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image, Modal, Touchable, TouchableOpacity } from 'react-native';
 
 import MapView, { Marker, Heatmap, Callout } from 'react-native-maps';
 
@@ -10,10 +10,13 @@ import IssueMarker from '../components/IssueMarker';
 
 import { auth, db } from '../firebase/firebase-config';
 import { getDocs, collection } from "firebase/firestore";
+import { useTheme } from '../theme/ThemeProvider';
 
 export default function Map() {
 
     const mapRef = useRef();
+
+    const { colors} = useTheme();
 
     const {currentLocation} = useCurrentLocation();
 
@@ -30,6 +33,8 @@ export default function Map() {
     });
 
     const [issues, setIssues] = useState([])
+    const [ item, setItem] = useState();
+    const [modalVisible, setModalVisible] = useState(false);
 
   const getIssues = async () => {
     const temp = [];
@@ -55,6 +60,7 @@ export default function Map() {
                         latitude: issue.latitude,
                         longitude: issue.longitude
                     }}
+                    onPress={() => [setModalVisible(true), setItem(issue)]}
                 >
                     <IssueMarker marker={issue} />
                 </Marker> 
@@ -69,6 +75,54 @@ export default function Map() {
   
   return (
     <View style={styles.container}>
+        <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}
+            style={{
+                flex: 1,
+            }}
+        >
+            <View style={{
+                width: '90%',
+                alignItems: 'center',
+                marginLeft: '5%',
+                marginTop: 60
+            }}>
+            <Image 
+                source={{uri: item?.image}}
+                style={{
+                    width: '100%',
+                    height: 600,
+                    borderRadius: 10
+                }}
+                resizeMode='contain'
+            />
+            <TouchableOpacity
+                style={{
+                    width: '90%',
+                    height: 50,
+                    backgroundColor: colors.primary,
+                    borderRadius: 10,
+                    marginTop: 10,
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}
+                onPress={() => setModalVisible(false)}
+            >
+                <Text style={{
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                    color: colors.background
+                }}>Zamknij</Text>
+            </TouchableOpacity>
+            </View>
+            
+        </Modal>
       <MapView 
             ref={mapRef}
             style={{width: '100%', height: '100%'}} 
