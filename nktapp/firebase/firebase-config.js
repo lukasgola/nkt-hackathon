@@ -189,6 +189,8 @@ export async function addQuickAction(event){
     await addDoc(collection(db, `users/${auth.currentUser.uid}/issues/`), {
       image: event.image,
       desc: event.desc,
+      latitude: event.latitude,
+      longitude: event.longitude
     });
   } catch (e) {
     console.error("Error adding document: ", e);

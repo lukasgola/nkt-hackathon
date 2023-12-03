@@ -9,12 +9,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 //Firebase
 import { auth, db } from '../firebase/firebase-config';
 import { getDocs, collection } from "firebase/firestore";
+import { useCurrentLocation } from '../providers/CurrentLocationProvider';
 
 export default function Issues({navigation}) {
 
 
   const {colors} = useTheme();
   const {isFocused} = useIsFocused();
+  const {currentLocation} = useCurrentLocation();
 
   const [issues, setIssues] = useState([])
 
@@ -72,7 +74,7 @@ export default function Issues({navigation}) {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => 
-        <TouchableOpacity onPress={() => navigation.navigate('Map', {issues: issues})}>
+        <TouchableOpacity onPress={() => navigation.navigate('Map')}>
             <Ionicons name='map-outline' size={25} color={colors.primary}/>
         </TouchableOpacity>,
     });
@@ -82,7 +84,9 @@ export default function Issues({navigation}) {
     const focusHandler = navigation.addListener('focus', () => {
         getIssues();
     });
+    console.log(currentLocation)
     return focusHandler;
+    
 }, [navigation]);
 
 

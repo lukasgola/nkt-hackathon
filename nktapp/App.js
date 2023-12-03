@@ -16,6 +16,7 @@ import { auth } from "./firebase/firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 import { InstalationProvider } from './providers/InstalationProvider';
 import { WireCountProvider } from './providers/WireCountProvider';
+import { CurrentLocationProvider } from './providers/CurrentLocationProvider';
 
 export default function App() {
 
@@ -92,8 +93,9 @@ export default function App() {
         <CurrentUserProvider>
           <InstalationProvider>
             <WireCountProvider>
-            
+            <CurrentLocationProvider>
             {isUser ? <BottomTabs/> : <LoginStack/> }
+            </CurrentLocationProvider>
             </WireCountProvider>
           </InstalationProvider>
         </CurrentUserProvider>

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -8,7 +8,10 @@ import { useCurrentLocation } from '../providers/CurrentLocationProvider';
 
 import IssueMarker from '../components/IssueMarker';
 
-export default function Map({route}) {
+import { auth, db } from '../firebase/firebase-config';
+import { getDocs, collection } from "firebase/firestore";
+
+export default function Map() {
 
     const mapRef = useRef();
 
@@ -26,9 +29,26 @@ export default function Map({route}) {
         longitudeDelta: DEFAULT_DELTA.longitudeDelta,
     });
 
+    const [issues, setIssues] = useState([])
+
+  const getIssues = async () => {
+    const temp = [];
+    const querySnapshot = await getDocs(collection(db, "users", auth.currentUser.uid, "issues"));
+    querySnapshot.forEach((doc) => {      
+        // doc.data() is never undefined for query doc snapshots
+        const data = {
+            ...doc.data(),
+            id: doc.id,
+        }
+        temp.push(data);
+        console.log(data);
+    });
+    setIssues(temp)
+}
+
     const renderIssues = () => {
         return(
-            route.params.issues.map((issue) => (
+            issues.map((issue) => (
                 <Marker
                     key={issue.id}
                     coordinate={{
@@ -41,6 +61,11 @@ export default function Map({route}) {
             ))
         )
     }
+
+
+    useEffect(() => {
+        getIssues();
+    }, [])
   
   return (
     <View style={styles.container}>

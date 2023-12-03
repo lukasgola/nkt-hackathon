@@ -11,6 +11,7 @@ import {useForm, Controller} from 'react-hook-form';
 
 import { manipulateAsync, FlipType, SaveFormat } from 'expo-image-manipulator';
 
+import { useCurrentLocation } from '../providers/CurrentLocationProvider';
 
 
 //Firebase
@@ -27,6 +28,7 @@ export default function QuickAction({navigation}) {
     const [isSending, setIsSending] = useState(false);
 
     const {colors} = useTheme();
+    const {currentLocation} = useCurrentLocation();
 
     const { control, handleSubmit, formState: {errors} } = useForm();
 
@@ -47,6 +49,8 @@ export default function QuickAction({navigation}) {
                     const event = {
                         image: url.downloadURL,
                         desc: description == undefined ? '' : description,
+                        latitude: currentLocation.latitude,
+                        longitude: currentLocation.longitude
                     }
                     await addQuickAction(event);
                     setIsSending(false)

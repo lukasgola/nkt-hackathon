@@ -25,7 +25,7 @@ const IssueMarker = ({marker}) => {
                     height: 45,
                     borderRadius: 8
                 }}
-                source={{uri: marker.image.downloadURL}}
+                source={{uri: marker.image}}
             />
         </View>
   )
