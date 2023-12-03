@@ -2,9 +2,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
+import { useTheme } from '../theme/ThemeProvider';
+
 import Issues from '../src/Issues';
 import IssueRequest from '../src/IssueRequest';
-import { useTheme } from '../theme/ThemeProvider';
+import Map from '../src/Map';
+
+
 
 export default function IssueStack() {
 
@@ -31,6 +35,13 @@ export default function IssueStack() {
           component={IssueRequest} 
           options={{
             headerTitle: 'Zgłoś usterkę'
+          }}
+        />
+        <Stack.Screen 
+          name="Map" 
+          component={Map} 
+          options={{
+            headerTitle: 'Mapa'
           }}
         />
     </Stack.Navigator>

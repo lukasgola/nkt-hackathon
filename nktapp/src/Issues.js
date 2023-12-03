@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, Image, Alert } from 'react-native';
 import { useTheme } from '../theme/ThemeProvider';
 
 import { useIsFocused } from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 //Firebase
 import { auth, db } from '../firebase/firebase-config';
@@ -67,6 +68,15 @@ export default function Issues({navigation}) {
     )
     
   }
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => 
+        <TouchableOpacity onPress={() => navigation.navigate('Map', {issues: issues})}>
+            <Ionicons name='map-outline' size={25} color={colors.primary}/>
+        </TouchableOpacity>,
+    });
+}, []);
 
   React.useEffect(() => {
     const focusHandler = navigation.addListener('focus', () => {
