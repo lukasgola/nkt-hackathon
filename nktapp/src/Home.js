@@ -96,7 +96,7 @@ export default function Home({navigation}) {
     //Temperatura
     const [airTemp, setAirTemp] = useState('30');
 
-    const [groundTemp, setGroundTemp] = useState('30')
+    const [groundTemp, setGroundTemp] = useState('20')
     const [groundRes, setGroundRes] = useState('1.0')
 
     const [wireCountString, setWireCountString] = useState('');
@@ -384,12 +384,13 @@ export default function Home({navigation}) {
               />
               <Slider
                 style={{width: '80%', height: 40, marginTop: 20}}
-                minimumValue={10}
-                maximumValue={80}
+                minimumValue={0.5}
+                maximumValue={3}
+                step={0.1}
                 minimumTrackTintColor={colors.primary}
                 maximumTrackTintColor={colors.grey}
                 value={groundRes}
-                onValueChange={(value) => setGroundRes(value.toFixed(0).toString())}
+                onValueChange={(value) => setGroundRes(value.toFixed(1).toString())}
               />
             </View>
           </View>

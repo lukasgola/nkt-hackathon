@@ -141,6 +141,19 @@ export async function addIssue(event){
   }
 }
 
+export async function addHistory(event){
+  try {
+    await addDoc(collection(db, `users/${auth.currentUser.uid}/history/`), {
+      image: event.image,
+      desc: event.desc,
+      latitude: event.latitude,
+      longitude: event.longitude
+    });
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+}
+
 export async function uploadImage(uid, avatar) {
 
   const metadata = {
