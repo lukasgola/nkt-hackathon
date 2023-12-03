@@ -50,6 +50,7 @@ export default function CableResult({route}) {
     const {colors} = useTheme();
 
     const [items, setItems] = useState(route.params.cables);
+    const [input, setInput] = useState(route.params.input);
 
 
     const fazCalc = (faz) => {
@@ -96,10 +97,24 @@ export default function CableResult({route}) {
                     <Text style={{
                         color: '#1c81e6',
                         textAlign: 'center'
-                    }}>{filtered[0].link}</Text>
+                    }}>Dokumentacja</Text>
                 </TouchableOpacity>
             </View>
         )
+    }
+
+    const InputRow = ({text, value}) => {
+        if(value != null){
+            return(
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={{fontWeight: 'bold'}}>{text} </Text>
+                    <Text> {value}</Text>
+                </View>
+                )
+        }
+        
+
+        
     }
 
     useEffect(()=> {
@@ -117,8 +132,18 @@ export default function CableResult({route}) {
             renderItem={({item}) => <Item item={item} />}
             keyExtractor={item => item.id}
             ListHeaderComponent={
-                <View>
-                    
+                <View style={{
+                    marginTop: 10
+                }}>
+                    <InputRow value={input.instalation} text={'Typ instalacji:'} />
+                    <InputRow value={input.airTemperature} text={'Temperatura powietrza:'} />
+                    <InputRow value={input.groundTemperature} text={'Temperatura gruntu:'} />
+                    <InputRow value={input.groundResistance} text={'Rezystywność gruntu:'} />
+                    <InputRow value={input.wireCount} text={'Liczba zył obciązonych:'} />
+                    <InputRow value={input.metalType} text={'Metal zyły:'} />
+                    <InputRow value={input.isolationType} text={'Izolacja:'} />
+                    <InputRow value={input.power} text={'Moc:'} />
+                    <InputRow value={input.current} text={'Prąd:'} />
                 </View>
             }
         />

@@ -33,14 +33,6 @@ export default function SignIn({navigation}){
         setIsLogging(false);
     };
 
-    const onSignUp = () => {
-        navigation.navigate('SignUp')
-    }
-
-    const onForgotPassword = () => {
-        navigation.navigate('ForgotPassword')
-    }
-
     
     return (
         <KeyboardAvoidingView 
@@ -116,7 +108,7 @@ export default function SignIn({navigation}){
                         }
                 </TouchableOpacity>
                 <TouchableOpacity 
-                    onPress={onForgotPassword}
+                    onPress={() => console.log("Send password")}
                     style={{ width: '100%', height: 50, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginTop: 40 }}>
                     <Text style={{color: colors.grey_d}}>Zapomniałeś hasła?</Text>
                 </TouchableOpacity>

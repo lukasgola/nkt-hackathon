@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TouchableOpacity, View, Animated, TextInput, ScrollView, DrawerLayoutAndroidComponent } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Animated, TextInput, ScrollView, ActivityIndicator } from 'react-native';
 
 //Providers
 import { useTheme } from '../theme/ThemeProvider';
@@ -115,6 +115,9 @@ export default function Home({navigation}) {
     const isFocused = useIsFocused();
 
 
+    const [isLoading, setIsLoading] = useState(false);
+
+
     const InputCategory = (props) => {
       return(
         <Text style={{
@@ -157,9 +160,17 @@ export default function Home({navigation}) {
 
     const onSubmit = async () => {
       if(instalation.id && wireCount.id && metalType && isolationType && valueType){
-
+        setIsLoading(true);
         const input = {
-          
+          instalation: instalation.title,
+          airTemperature: instalationType == "Powietrze" ? airTemp : null,
+          groundTemperature: instalationType == "Powietrze" ? null : groundTemp,
+          groundResistance:  instalationType == "Powietrze" ? null : groundRes,
+          wireCount: wireCount.title == "a" ? 2 : 3,
+          metalType: metalType,
+          isolationType: isolationType,
+          power: valueType == "power" ? power : null,
+          current: valueType == "current" ? current : null
         }
 
         if (valueType == "power"){
@@ -167,16 +178,16 @@ export default function Home({navigation}) {
           const result = await getDataFromWires(instalation.title, airTemp, wireCount.title, metalType, isolationType, power, null, groundTemp, groundRes)
           //console.log(result)
           onAirClick();
-          navigation.navigate('CableResult', {cables: result});
+          navigation.navigate('CableResult', {cables: result, input: input});
         } else {
           setGlobalValues(instalation.title, airTemp, wireCount.title, metalType, isolationType, null, current, groundTemp, groundRes)
           const result = await getDataFromWires(instalation.title, airTemp, wireCount.title, metalType, isolationType, null, current, groundTemp, groundRes)
           //console.log(result)
           onAirClick();
-          navigation.navigate('CableResult', {cables: result});
+          navigation.navigate('CableResult', {cables: result, input: input});
         }
         
-        
+        setIsLoading(false)
       } else {
         showErrorToast()
         console.log('error')
@@ -438,7 +449,7 @@ export default function Home({navigation}) {
         }}>
           <TouchableOpacity 
             style={{
-              width: '30%',
+              width: '47.5%',
               height: '100%',
               backgroundColor: colors.grey_l,
               borderColor: metalType == "Al" ? colors.primary : colors.grey_l,
@@ -456,7 +467,7 @@ export default function Home({navigation}) {
           </TouchableOpacity>
           <TouchableOpacity 
             style={{
-              width: '30%',
+              width: '47.5%',
               height: '100%',
               backgroundColor: colors.grey_l,
               borderColor: metalType == "Cu" ? colors.primary : colors.grey_l,
@@ -471,24 +482,6 @@ export default function Home({navigation}) {
               color: metalType == "Cu" ? colors.primary : colors.grey_d,
               fontWeight: metalType == "Cu" ? 'bold' : 'regular',
             }}>Cu</Text>
-          </TouchableOpacity>
-          <TouchableOpacity 
-            style={{
-              width: '30%',
-              height: '100%',
-              backgroundColor: colors.grey_l,
-              borderColor: metalType == "B2ca" ? colors.primary : colors.grey_l,
-              borderWidth: 2,
-              borderRadius: 10,
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-            onPress={() => setMetalType('B2ca')}
-          >
-            <Text style={{
-              color: metalType == "B2ca" ? colors.primary : colors.grey_d,
-              fontWeight: metalType == "B2ca" ? 'bold' : 'regular',
-            }}>B2ca</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -508,7 +501,7 @@ export default function Home({navigation}) {
         }}>
           <TouchableOpacity 
             style={{
-              width: '47.5%',
+              width: '30%',
               height: '100%',
               backgroundColor: colors.grey_l,
               borderColor: isolationType == "PVC" ? colors.primary : colors.grey_l,
@@ -526,7 +519,7 @@ export default function Home({navigation}) {
           </TouchableOpacity>
           <TouchableOpacity 
             style={{
-              width: '47.5%',
+              width: '30%',
               height: '100%',
               backgroundColor: colors.grey_l,
               borderColor: isolationType == "XLPE" ? colors.primary : colors.grey_l,
@@ -541,6 +534,24 @@ export default function Home({navigation}) {
               color: isolationType == "XLPE" ? colors.primary : colors.grey_d,
               fontWeight: isolationType == "XLPE" ? 'bold' : 'regular',
             }}>XLPE</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={{
+              width: '30%',
+              height: '100%',
+              backgroundColor: colors.grey_l,
+              borderColor: isolationType == "B2ca" ? colors.primary : colors.grey_l,
+              borderWidth: 2,
+              borderRadius: 10,
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+            onPress={() => setIsolationType('B2ca')}
+          >
+            <Text style={{
+              color: isolationType == "B2ca" ? colors.primary : colors.grey_d,
+              fontWeight: isolationType == "B2ca" ? 'bold' : 'regular',
+            }}>B2ca</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -580,13 +591,13 @@ export default function Home({navigation}) {
               width: '47.5%',
               height: '100%',
               backgroundColor: colors.grey_l,
-              borderColor: valueType == "Prąd" ? colors.primary : colors.grey_l,
+              borderColor: valueType == "current" ? colors.primary : colors.grey_l,
               borderWidth: 2,
               borderRadius: 10,
               alignItems: 'center',
               justifyContent: 'center'
             }}
-            onPress={() => setValueType('Prąd')}
+            onPress={() => setValueType('current')}
           >
             <Text style={{
               color: valueType == "Prąd" ? colors.primary : colors.grey_d,
@@ -632,6 +643,7 @@ export default function Home({navigation}) {
 
 
       <TouchableOpacity 
+        disabled={isLoading}
         style={{
           width: '100%',
           height: 50,
@@ -644,10 +656,13 @@ export default function Home({navigation}) {
         }}
         onPress={() => onSubmit()}
       >
-        <Text style={{
-          color: colors.background,
-          fontWeight: 'bold'
-        }}>Znajdź kabel</Text>
+        {isLoading ? <ActivityIndicator color={colors.background} /> : 
+          <Text style={{
+              color: colors.background, 
+              fontWeight: 'bold', 
+              fontSize: 18
+          }}>Znajdź przewód</Text>
+        }
       </TouchableOpacity>
 
     </ScrollView>
