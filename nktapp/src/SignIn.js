@@ -39,19 +39,24 @@ export default function SignIn({navigation}){
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: colors.background }}>
             <View style={{ width: 0.9*width }}>
-                <View style={{ width: '100%', height: 150, justifyContent: 'center', alignItems: 'center', marginBottom: 20 }}>
+                <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', marginBottom: 20 }}>
+                    <Image 
+                        source={require ('../assets/logo.png')} 
+                        style={{
+                            width: '60%',
+                            height: 50
+                        }}
+                        resizeMode='contain'
+                    />
                     <Image 
                         source={require ('../assets/NKT.png')} 
                         style={{
                             width: '60%',
+                            height: 50
                         }}
                         resizeMode='contain'
                     />
-                    <Text style={{
-                        fontSize: 24,
-                        fontWeight: 'bold',
-                        color: colors.text
-                    }}>NKT</Text>
+                    
                 </View>
                 <View style={{ width: '100%', height: 50, justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
                     
