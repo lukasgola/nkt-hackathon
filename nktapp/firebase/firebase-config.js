@@ -184,7 +184,7 @@ export async function setLikeParty(id, organizer, likes, mode){
   
 }
 
-export async function addQuickAction(event){
+export async function addIssue(event){
   try {
     await addDoc(collection(db, `users/${auth.currentUser.uid}/issues/`), {
       image: event.image,

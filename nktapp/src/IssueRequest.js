@@ -15,7 +15,7 @@ import { useCurrentLocation } from '../providers/CurrentLocationProvider';
 
 
 //Firebase
-import { auth, uploadImage, addQuickAction } from '../firebase/firebase-config'; 
+import { auth, uploadImage, addQuickAction, addIssue } from '../firebase/firebase-config'; 
 
 export default function QuickAction({navigation}) {
 
@@ -52,7 +52,7 @@ export default function QuickAction({navigation}) {
                         latitude: currentLocation.latitude,
                         longitude: currentLocation.longitude
                     }
-                    await addQuickAction(event);
+                    await addIssue(event);
                     setIsSending(false)
                     navigation.goBack();
                 } catch (error) {
