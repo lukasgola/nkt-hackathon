@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 
 //Providers
 import { useTheme } from '../theme/ThemeProvider';
@@ -18,14 +18,24 @@ export default function Profile() {
     <View style={styles.container}>
         <View style={{
           width: '100%',
-          height: 100,
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          marginBottom: 20
         }}>
-            
-            <Text style={{fontWeight: 'bold'}}>{currentUser.firstName} {currentUser.secondName}</Text>
 
-          <Text>{currentUser.email}</Text>
+            <Image
+              source={require('../assets/default-user-icon-4.jpg')}
+              width={50}
+              height={50}
+              resizeMode='contain'
+              style={{
+                width: 100,
+                height: 100,
+                marginBottom: 20,
+              }}
+            />
+            <Text style={{fontWeight: 'bold'}}>{currentUser.firstName} {currentUser.secondName}</Text>
+            <Text>{currentUser.email}</Text>
         </View>
         
         <TouchableOpacity
@@ -42,7 +52,7 @@ export default function Profile() {
             <Text style={{
                 fontWeight: 'bold',
                 color: colors.background
-            }}>Sign Out</Text>
+            }}>Wyloguj się</Text>
         </TouchableOpacity>
         <StatusBar style="auto" />
     </View>

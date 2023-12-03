@@ -107,7 +107,7 @@ export default function Issues({navigation}) {
         <Text style={{
           color: colors.background,
           fontWeight: 'bold'
-        }}>Zgłoś zdarzenie</Text>
+        }}>Zgłoś usterkę</Text>
       </TouchableOpacity>
 
       <View style={{

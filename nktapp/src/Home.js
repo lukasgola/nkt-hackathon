@@ -418,7 +418,7 @@ export default function Home({navigation}) {
         }}>
           <TouchableOpacity 
             style={{
-              width: '47.5%',
+              width: '30%',
               height: '100%',
               backgroundColor: colors.grey_l,
               borderColor: metalType == "Al" ? colors.primary : colors.grey_l,
@@ -436,7 +436,7 @@ export default function Home({navigation}) {
           </TouchableOpacity>
           <TouchableOpacity 
             style={{
-              width: '47.5%',
+              width: '30%',
               height: '100%',
               backgroundColor: colors.grey_l,
               borderColor: metalType == "Cu" ? colors.primary : colors.grey_l,
@@ -451,6 +451,24 @@ export default function Home({navigation}) {
               color: metalType == "Cu" ? colors.primary : colors.grey_d,
               fontWeight: metalType == "Cu" ? 'bold' : 'regular',
             }}>Cu</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={{
+              width: '30%',
+              height: '100%',
+              backgroundColor: colors.grey_l,
+              borderColor: metalType == "B2ca" ? colors.primary : colors.grey_l,
+              borderWidth: 2,
+              borderRadius: 10,
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+            onPress={() => setMetalType('B2ca')}
+          >
+            <Text style={{
+              color: metalType == "B2ca" ? colors.primary : colors.grey_d,
+              fontWeight: metalType == "B2ca" ? 'bold' : 'regular',
+            }}>B2ca</Text>
           </TouchableOpacity>
         </View>
       </View>
