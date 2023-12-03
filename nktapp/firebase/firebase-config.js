@@ -201,12 +201,12 @@ export async function uploadImage(uid, avatar) {
     contentType: 'image/jpeg',
   };
 
-  
+
   const response = await fetch(avatar);
   const blob = await response.blob();
 
   // Upload file and metadata to the object 'images/mountains.jpg'
-  const storageRef = ref(storage, "issues" + uid);
+  const storageRef = ref(storage, "issues/" + Date.now());
   const uploadTask = uploadBytesResumable(storageRef, blob);
 
   return new Promise((resolve, reject) => {
