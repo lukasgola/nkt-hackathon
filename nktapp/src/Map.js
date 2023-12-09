@@ -85,23 +85,31 @@ export default function Map() {
         }}
             style={{
                 flex: 1,
+                backgroundColor: colors.background
             }}
         >
             <View style={{
-                width: '90%',
+                width: '100%',
                 alignItems: 'center',
-                marginLeft: '5%',
-                marginTop: 60
+                //marginLeft: '5%',
+                marginTop: 80
             }}>
-            <Image 
-                source={{uri: item?.image}}
-                style={{
-                    width: '100%',
+                <View style={{
+                    borderRadius: 10,
+                    width: '90%',
                     height: 600,
-                    borderRadius: 10
-                }}
-                resizeMode='contain'
-            />
+                }}>
+                    <Image 
+                        source={{uri: item?.image}}
+                        style={{
+                            width: '100%',
+                            height: 600,
+                            borderRadius: 10
+                        }}
+                        //resizeMode='contain'
+                    />
+                </View>
+            
             <TouchableOpacity
                 style={{
                     width: '90%',

@@ -95,7 +95,7 @@ export default function Issues({navigation}) {
         style={{
           width: '90%',
           height: 50,
-          backgroundColor: colors.primary,
+          backgroundColor: colors.secondary,
           borderRadius: 10,
           alignItems: 'center',
           justifyContent: 'center',

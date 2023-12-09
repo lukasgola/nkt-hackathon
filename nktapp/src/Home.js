@@ -662,7 +662,7 @@ export default function Home({navigation}) {
         style={{
           width: '100%',
           height: 50,
-          backgroundColor: colors.primary,
+          backgroundColor: colors.secondary,
           borderRadius: 10,
           alignItems: 'center',
           justifyContent: 'center',

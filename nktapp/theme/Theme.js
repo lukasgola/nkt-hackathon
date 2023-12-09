@@ -2,7 +2,7 @@
 export const lightColors = {
     primary: '#122f76',
     primary_l: '#d7f6ed',
-    secondary: '#00d295',
+    secondary: '#ff8d06',
     secondary_l :'#fbedcc',
     grey_l: '#f2f2f2',
     grey: '#cbcbd7',
