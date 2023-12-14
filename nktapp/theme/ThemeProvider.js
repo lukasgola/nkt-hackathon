@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Appearance } from 'react-native-web';
+import { Appearance } from 'react-native';
 import {lightColors, darkColors} from './Theme';
 
 export const ThemeContext = React.createContext({
