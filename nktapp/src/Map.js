@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, Modal, Touchable, TouchableOpacity } from 'react-native';
-
+import { BlurView } from 'expo-blur';
 import MapView, { Marker, Heatmap, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
 import { MapStyle1 } from '../theme/MapStyle1';
 import { useCurrentLocation } from '../providers/CurrentLocationProvider';
@@ -117,12 +117,15 @@ export default function Map() {
                 backgroundColor: colors.background
             }}
         >
-            <View style={{
+            <BlurView style={{
                 width: '100%',
+                height: '100%',
                 alignItems: 'center',
                 //marginLeft: '5%',
                 marginTop: 80
-            }}>
+            }}
+            intensity={100}
+            >
                 <View style={{
                     borderRadius: 10,
                     width: '90%',
@@ -157,7 +160,7 @@ export default function Map() {
                     color: colors.background
                 }}>Zamknij</Text>
             </TouchableOpacity>
-            </View>
+            </BlurView>
             
         </Modal>
       <MapView 
