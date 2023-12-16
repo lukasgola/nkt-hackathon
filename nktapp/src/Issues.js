@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState, useLayoutEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, Image, Alert } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Image, Dimensions } from 'react-native';
 import { useTheme } from '../theme/ThemeProvider';
 
 import { useIsFocused } from '@react-navigation/native';
@@ -17,6 +17,8 @@ export default function Issues({navigation}) {
   const {colors} = useTheme();
   const {isFocused} = useIsFocused();
   const {currentLocation} = useCurrentLocation();
+
+  const width = Dimensions.get('window').width;
 
   const [issues, setIssues] = useState([])
 
@@ -46,17 +48,18 @@ export default function Issues({navigation}) {
         marginHorizontal: '5%',
         marginBottom: 10,
         flexDirection: 'row',
+        justifyContent: 'space-between',
         padding: 15
       }}>
         <Image
           source={{uri: item.image}}
-          width={100}
+          width={0.25 * width}
           height={120}
           style={{
             borderRadius: 8,
           }}
         />
-        <View style={{marginLeft: 15}}>
+        <View style={{marginLeft: 15, width: '60%'}}>
           <Text style={{
             color: colors.grey_d,
           }}>03.12.2023</Text>
@@ -64,6 +67,23 @@ export default function Issues({navigation}) {
             fontSize: 18,
             marginTop: 10
           }}>{item.desc}</Text>
+          <View style={{
+            width: '100%',
+            height: 40,
+            backgroundColor: colors.primary,
+            borderRadius: 10,
+            marginTop: 20,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <Text style={{
+              color: colors.background,
+              fontWeight: 'bold'
+            }}>Oczekujace...</Text>
+          </View>
+
+        
+
         </View>
         
       </View>
