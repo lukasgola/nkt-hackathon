@@ -34,22 +34,22 @@ export default function Home({navigation}) {
     {
       id: 3,
       title: 'B1',
-      desc: 'W rurze instalacyjnej na ścianie/murze - dla kabli jednozyłowych'
+      desc: 'W rurze instalacyjnej na ścianie/murze - dla kabli jednożyłowych'
     },
     {
       id: 4,
       title: 'B2',
-      desc: 'W rurze instalacyjnej na ścianie/murze - dla kabli i przewodow wielozyłowych'
+      desc: 'W rurze instalacyjnej na ścianie/murze - dla kabli i przewodow wielożyłowych'
     },
     {
       id: 5,
       title: 'E',
-      desc: 'W powietrzu (np. perforowane koryto) - dla kabli i przewodów wielozyłowych'
+      desc: 'W powietrzu (np. perforowane koryto) - dla kabli i przewodów wielożyłowych'
     },
     {
       id: 6,
       title: 'F',
-      desc: 'W powietrzu (np. perforowane koryto) - dla kabli i przewodów jednozyłowych'
+      desc: 'W powietrzu (np. perforowane koryto) - dla kabli i przewodów jednożyłowych'
     },
   ]
 
@@ -70,17 +70,17 @@ export default function Home({navigation}) {
     {
       id: 1,
       title: 'a',
-      desc: 'Układ jednofazowy (dwie zyły obciązone)'
+      desc: 'Układ jednofazowy (dwie zyły obciążone)'
     },
     {
       id: 2,
       title: 'b',
-      desc: 'Układ trójfazowy wielozyłowy (trzy zyły obiązone)'
+      desc: 'Układ trójfazowy wielożyłowy (trzy zyły obiążone)'
     },
     {
       id: 3,
       title: 'c',
-      desc: 'Układ trójfazowy jednozyłowy (trzy zyły obciązone)'
+      desc: 'Układ trójfazowy jednożyłowy (trzy zyły obciązżone)'
     }
   ]
 

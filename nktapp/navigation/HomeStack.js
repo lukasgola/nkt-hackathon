@@ -28,8 +28,16 @@ export default function HomeStack() {
             headerTitle: 'Kalkulator'
           }}
         />
-        <Stack.Screen name="ChooseScreen" component={ChooseScreen} />
-        <Stack.Screen name="CableResult" component={CableResult} />
+        <Stack.Screen name="ChooseScreen" component={ChooseScreen} 
+          options={{
+            headerTitle: 'Wybierz opcję'
+          }} 
+        />
+        <Stack.Screen name="CableResult" component={CableResult}
+          options={{
+            headerTitle: 'Wynik'
+          }}
+        />
     </Stack.Navigator>
   );
 }

@@ -109,7 +109,7 @@ export default function History({navigation}) {
     }}>
       <Text style={{
         color: colors.grey_d
-      }}>No items to display</Text>
+      }}>Nie ma jeszcze żadnych wyników</Text>
     </View>
   );
 
