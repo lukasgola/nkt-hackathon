@@ -13,7 +13,7 @@ const IssueMarker = ({marker}) => {
             style={{
                 width: 50,
                 height: 50,
-                backgroundColor: colors.grey,
+                backgroundColor: colors.secondary,
                 borderRadius: 10,
                 justifyContent: 'center',
                 alignItems: 'center'

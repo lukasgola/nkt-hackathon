@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, Modal, Touchable, TouchableOpacity } from 'react-native';
 
-import MapView, { Marker, Heatmap, Callout } from 'react-native-maps';
-
+import MapView, { Marker, Heatmap, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
+import { MapStyle1 } from '../theme/MapStyle1';
 import { useCurrentLocation } from '../providers/CurrentLocationProvider';
 
 import IssueMarker from '../components/IssueMarker';
@@ -63,6 +63,35 @@ export default function Map() {
                     onPress={() => [setModalVisible(true), setItem(issue)]}
                 >
                     <IssueMarker marker={issue} />
+                </Marker> 
+            ))
+        )
+    }
+
+    const renderIssues2 = () => {
+        return(
+            issues.map((issue) => (
+                <Marker
+                    key={issue.id}
+                    coordinate={{
+                        latitude: issue.latitude,
+                        longitude: issue.longitude
+                    }}
+                    onPress={() => [setModalVisible(true), setItem(issue)]}
+                >
+                    <View style={{
+                        width: 25,
+                        height: 25,
+                        borderRadius: 5,
+                        backgroundColor: colors.secondary,
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}>
+                        <Text style={{
+                            fontWeight: 'bold',
+                            color: colors.background
+                        }}>!</Text>
+                    </View>
                 </Marker> 
             ))
         )
@@ -139,8 +168,11 @@ export default function Map() {
             showsUserLocation={true}
             followsUserLocation={true}
             showsMyLocationButton={true}
+            provider={PROVIDER_GOOGLE}
+            customMapStyle={MapStyle1}
+            
         >
-            {renderIssues()}
+            {renderIssues2()}
         </MapView>
     </View>
   );

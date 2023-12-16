@@ -231,7 +231,7 @@ export default function QuickAction({navigation}) {
                         <Text style={{
                             color: colors.text,
                             fontWeight: 'bold'
-                        }}>RETAKE</Text>
+                        }}>PONÓW</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity 
@@ -248,7 +248,7 @@ export default function QuickAction({navigation}) {
                         <Text style={{
                             color: colors.background,
                             fontWeight: 'bold'
-                        }}>NEXT</Text>
+                        }}>PRZEŚlIJ</Text>
                     </TouchableOpacity>
                 </View>
                 </View>
