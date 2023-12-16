@@ -4,13 +4,11 @@ const Stack = createNativeStackNavigator();
 
 import { useTheme } from '../theme/ThemeProvider';
 
-import Home from '../src/Home';
-import ChooseScreen from '../src/ChooseScreen';
-import CableResult from '../src/CableResult';
+import History from '../src/History';
 
 
 
-export default function HomeStack() {
+export default function HistoryStack() {
 
   const {colors} = useTheme();
 
@@ -23,13 +21,11 @@ export default function HomeStack() {
         }
       }}
     >
-        <Stack.Screen name="Home" component={Home}
+        <Stack.Screen name="History" component={History}
           options={{
-            headerTitle: 'Kalkulator'
+            headerTitle: 'Historia'
           }}
         />
-        <Stack.Screen name="ChooseScreen" component={ChooseScreen} />
-        <Stack.Screen name="CableResult" component={CableResult} />
     </Stack.Navigator>
   );
 }

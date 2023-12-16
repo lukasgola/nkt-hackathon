@@ -11,6 +11,7 @@ import History from '../src/History';
 import Profile from '../src/Profile';
 
 import HomeStack from './HomeStack';
+import HistoryStack from './HistoryStack';
 import IssueStack from './IssueStack';
 
 import { useTheme } from '../theme/ThemeProvider';
@@ -62,15 +63,15 @@ export default function BottomTabs() {
                     <Item focused={focused} icon='home-outline' filled='home' title='Home' />
                 ),
                 headerShown: false,
-                tabBarLabel: 'Oblicz'
+                tabBarLabel: 'Kalkulator'
                 
         }}/>
-      <Tab.Screen name="History" component={History} options={{
+      <Tab.Screen name="HistoryStack" component={HistoryStack} options={{
                 tabBarIcon: ({focused}) => (
                     <Item focused={focused} icon='file-tray-full-outline' filled='file-tray-full' title='Home' />
                 ),
                 tabBarLabel: 'Historia',
-                headerTitle: 'Historia'
+                headerShown: false
                 
                 
         }}/>
