@@ -100,6 +100,20 @@ export default function History({navigation}) {
   }
 
 
+  const renderEmptyComponent = () => (
+    <View style={{
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: 50,
+    }}>
+      <Text style={{
+        color: colors.grey_d
+      }}>No items to display</Text>
+    </View>
+  );
+
+
   return (
     <View style={{
       width: '100%',
@@ -113,18 +127,10 @@ export default function History({navigation}) {
           data={history}
           renderItem={({item}) => <Item input={item} />}
           keyExtractor={item => item.id}
+          ListEmptyComponent={renderEmptyComponent}
         />
       </View>
       
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    //justifyContent: 'center',
-  },
-});
