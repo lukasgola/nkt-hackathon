@@ -5,6 +5,7 @@ import { useTheme } from '../theme/ThemeProvider';
 
 import { useIsFocused } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { EmptyComponent } from '../components/EmptyComponent';
 
 //Firebase
 import { auth, db } from '../firebase/firebase-config';
@@ -100,20 +101,6 @@ export default function History({navigation}) {
   }
 
 
-  const renderEmptyComponent = () => (
-    <View style={{
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginTop: 50,
-    }}>
-      <Text style={{
-        color: colors.grey_d
-      }}>Nie ma jeszcze żadnych wyników</Text>
-    </View>
-  );
-
-
   return (
     <View style={{
       width: '100%',
@@ -127,7 +114,7 @@ export default function History({navigation}) {
           data={history}
           renderItem={({item}) => <Item input={item} />}
           keyExtractor={item => item.id}
-          ListEmptyComponent={renderEmptyComponent}
+          ListEmptyComponent={<EmptyComponent/>}
         />
       </View>
       

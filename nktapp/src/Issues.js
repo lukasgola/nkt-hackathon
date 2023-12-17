@@ -3,6 +3,8 @@ import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, Image, Dimensions } from 'react-native';
 import { useTheme } from '../theme/ThemeProvider';
 
+import { EmptyComponent } from '../components/EmptyComponent';
+
 import { useIsFocused } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -142,6 +144,7 @@ export default function Issues({navigation}) {
           data={issues}
           renderItem={({item}) => <Issue item={item} />}
           keyExtractor={item => item.id}
+          ListEmptyComponent={<EmptyComponent/>}
         />
       </View>
       

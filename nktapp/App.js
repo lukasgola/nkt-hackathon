@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { LogBox, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
 
@@ -19,6 +19,10 @@ import { WireCountProvider } from './providers/WireCountProvider';
 import { CurrentLocationProvider } from './providers/CurrentLocationProvider';
 
 export default function App() {
+
+  LogBox.ignoreLogs([
+    'Non-serializable values were found in the navigation state',
+  ]);
 
 
   const [isUser, setIsUser] = useState(true);
