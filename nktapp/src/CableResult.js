@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity, Linking } from 'react-native';
 import { useTheme } from '../theme/ThemeProvider';
 
+import { EmptyComponent } from '../components/EmptyComponent';
+
 export default function CableResult({route}) {
 
 
@@ -143,6 +145,7 @@ export default function CableResult({route}) {
                     <InputRow value={input.current} text={'Prąd:'} />
                 </View>
             }
+            ListEmptyComponent={<EmptyComponent/>}
         />
     </View>
   );
