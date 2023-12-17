@@ -70,17 +70,17 @@ export default function Home({navigation}) {
     {
       id: 1,
       title: 'a',
-      desc: 'Układ jednofazowy (dwie zyły obciążone)'
+      desc: 'Układ jednofazowy (dwie żyły obciążone)'
     },
     {
       id: 2,
       title: 'b',
-      desc: 'Układ trójfazowy wielożyłowy (trzy zyły obiążone)'
+      desc: 'Układ trójfazowy wielożyłowy (trzy żyły obiążone)'
     },
     {
       id: 3,
       title: 'c',
-      desc: 'Układ trójfazowy jednożyłowy (trzy zyły obciązżone)'
+      desc: 'Układ trójfazowy jednożyłowy (trzy żyły obciążone)'
     }
   ]
 
@@ -94,10 +94,14 @@ export default function Home({navigation}) {
     const [instalationString, setInstalationString] = useState('');
 
     //Temperatura
-    const [airTemp, setAirTemp] = useState('30');
+    const [airTemp, setAirTemp] = useState(30);
+    const [airTempString, setAirTempString] = useState(airTemp.toString())
 
-    const [groundTemp, setGroundTemp] = useState('20')
-    const [groundRes, setGroundRes] = useState('1.0')
+    const [groundTemp, setGroundTemp] = useState(20)
+    const [groundTempString, setGroundTempString] = useState(groundTemp.toString())
+
+    const [groundRes, setGroundRes] = useState(1.0)
+    const [groundResString, setGroundResString] = useState(groundRes.toString())
 
     const [wireCountString, setWireCountString] = useState('');
 
@@ -320,9 +324,9 @@ export default function Home({navigation}) {
               textAlign: 'center',
               fontSize: 24
             }}
-            onChangeText={setAirTemp}
-            value={airTemp}
-            keyboardType="numeric"
+            onChangeText={(value) => [setAirTempString(value), setAirTemp(value)]}
+            value={airTempString}
+            keyboardType="number-pad"
           />
           <Slider
             style={{width: '80%', height: 40, marginTop: 20}}
@@ -331,7 +335,8 @@ export default function Home({navigation}) {
             minimumTrackTintColor={colors.primary}
             maximumTrackTintColor={colors.grey}
             value={airTemp}
-            onValueChange={(value) => setAirTemp(value.toFixed(0).toString())}
+            onValueChange={(value) => setAirTempString(value.toFixed(0).toString())}
+            onTouchEnd={() => setAirTemp(airTempString)}
           />
         </View>
           
@@ -357,9 +362,9 @@ export default function Home({navigation}) {
                   textAlign: 'center',
                   fontSize: 24
                 }}
-                onChangeText={setGroundTemp}
-                value={groundTemp}
-                keyboardType="numeric"
+                onChangeText={(value) => [setGroundTempString(value), setGroundTemp(value)]}
+                value={groundTempString}
+                keyboardType="number-pad"
               />
               <Slider
                 style={{width: '80%', height: 40, marginTop: 20}}
@@ -368,7 +373,8 @@ export default function Home({navigation}) {
                 minimumTrackTintColor={colors.primary}
                 maximumTrackTintColor={colors.grey}
                 value={groundTemp}
-                onValueChange={(value) => setGroundTemp(value.toFixed(0).toString())}
+                onValueChange={(value) => setGroundTempString(value.toFixed(0).toString())}
+                onTouchEnd={() => setGroundTemp(groundTempString)}
               />
             </View>
           </View>
@@ -392,9 +398,9 @@ export default function Home({navigation}) {
                   textAlign: 'center',
                   fontSize: 24
                 }}
-                onChangeText={setGroundRes}
-                value={groundRes}
-                keyboardType="numeric"
+                onChangeText={(value) => [setGroundResString(value), setGroundRes(value)]}
+                value={groundResString}
+                keyboardType="number-pad"
               />
               <Slider
                 style={{width: '80%', height: 40, marginTop: 20}}
@@ -404,7 +410,8 @@ export default function Home({navigation}) {
                 minimumTrackTintColor={colors.primary}
                 maximumTrackTintColor={colors.grey}
                 value={groundRes}
-                onValueChange={(value) => setGroundRes(value.toFixed(1).toString())}
+                onValueChange={(value) => setGroundResString(value.toFixed(1).toString())}
+                onTouchEnd={() => setGroundRes(groundResString)}
               />
             </View>
           </View>
