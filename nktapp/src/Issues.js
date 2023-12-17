@@ -12,6 +12,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { auth, db } from '../firebase/firebase-config';
 import { getDocs, collection } from "firebase/firestore";
 import { useCurrentLocation } from '../providers/CurrentLocationProvider';
+import IssueDetails from '../components/IssueDetails';
 
 export default function Issues({navigation}) {
 
@@ -23,6 +24,8 @@ export default function Issues({navigation}) {
   const width = Dimensions.get('window').width;
 
   const [issues, setIssues] = useState([])
+  const [item, setItem] = useState();
+  const [modalVisible, setModalVisible] = useState(false);
 
   const getIssues = async () => {
     const temp = [];
@@ -39,20 +42,29 @@ export default function Issues({navigation}) {
 }
 
 
+  const onIssueClick = (item) =>{
+    setItem(item);
+    setModalVisible(true);
+  }
+
+
 
   const Issue = ({item}) => {
     return(
-      <View style={{
-        width: '90%',
-        height: 150,
-        backgroundColor: colors.grey_l,
-        borderRadius: 10,
-        marginHorizontal: '5%',
-        marginBottom: 10,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: 15
-      }}>
+      <TouchableOpacity 
+        onPress={() => onIssueClick(item) }
+        style={{
+          width: '90%',
+          height: 150,
+          backgroundColor: colors.grey_l,
+          borderRadius: 10,
+          marginHorizontal: '5%',
+          marginBottom: 10,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          padding: 15
+        }}
+      >
         <Image
           source={{uri: item.image}}
           width={0.25 * width}
@@ -88,7 +100,7 @@ export default function Issues({navigation}) {
 
         </View>
         
-      </View>
+      </TouchableOpacity>
     )
     
   }
@@ -113,6 +125,11 @@ export default function Issues({navigation}) {
 
   return (
     <View style={styles.container}>
+      <IssueDetails 
+        item={item} 
+        modalVisible={modalVisible} 
+        setModalVisible={setModalVisible} 
+      />
       <TouchableOpacity 
         style={{
           width: '90%',

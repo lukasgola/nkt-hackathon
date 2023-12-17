@@ -11,6 +11,7 @@ import IssueMarker from '../components/IssueMarker';
 import { auth, db } from '../firebase/firebase-config';
 import { getDocs, collection } from "firebase/firestore";
 import { useTheme } from '../theme/ThemeProvider';
+import IssueDetails from '../components/IssueDetails';
 
 export default function Map() {
 
@@ -109,81 +110,13 @@ export default function Map() {
     <View style={{
         flex: 1
     }}>
-        <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        >
-            <BlurView 
-                style={{
-                    width: '100%',
-                    height: '100%',
-                    alignItems: 'center',
-                    paddingTop: 80
-                }}
-                intensity={30}
-                tint='dark'
-            >
-            </BlurView>
-            <View style={{
-                width: '90%',
-                position: 'absolute',
-                marginLeft: '5%',
-                bottom: 50
-            }}>
-                <View style={{
-                    borderRadius: 10,
-                    width: '100%',
-                }}>
-                    <Image 
-                        source={{uri: item?.image}}
-                        style={{
-                            width: '100%',
-                            height: 0.6*height,
-                            borderRadius: 10
-                        }}
-                        //resizeMode='contain'
-                    />
-                </View>
+        
+        <IssueDetails 
+            item={item}
+            modalVisible={modalVisible} 
+            setModalVisible={setModalVisible} 
+        />
 
-                <View style={{
-                    width: '100%',
-                    minHeight: 0.1*height,
-                    backgroundColor: colors.grey_l,
-                    borderRadius: 10,
-                    borderWidth: 1,
-                    borderColor: colors.primary,
-                    padding: 10,
-                    marginTop: 10
-                }}>
-                    <Text style={{
-                        color: colors.grey_d
-                    }}>
-                        {item?.desc}
-                    </Text>
-                </View>
-                
-                <TouchableOpacity
-                    style={{
-                        width: '100%',
-                        height: 50,
-                        backgroundColor: colors.primary,
-                        borderRadius: 10,
-                        marginTop: 10,
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }}
-                    onPress={() => setModalVisible(false)}
-                >
-                    <Text style={{
-                        fontSize: 18,
-                        fontWeight: 'bold',
-                        color: colors.background
-                    }}>Zamknij</Text>
-                </TouchableOpacity>
-            </View>
-            
-        </Modal>
       <MapView 
             ref={mapRef}
             style={{width: '100%', height: '100%'}} 
