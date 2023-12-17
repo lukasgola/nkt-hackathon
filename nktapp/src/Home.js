@@ -94,13 +94,13 @@ export default function Home({navigation}) {
     const [instalationString, setInstalationString] = useState('');
 
     //Temperatura
-    const [airTemp, setAirTemp] = useState(30);
+    const [airTemp, setAirTemp] = useState('30');
     const [airTempString, setAirTempString] = useState(airTemp.toString())
 
-    const [groundTemp, setGroundTemp] = useState(20)
+    const [groundTemp, setGroundTemp] = useState('20')
     const [groundTempString, setGroundTempString] = useState(groundTemp.toString())
 
-    const [groundRes, setGroundRes] = useState(1.0)
+    const [groundRes, setGroundRes] = useState('1.0')
     const [groundResString, setGroundResString] = useState(groundRes.toString())
 
     const [wireCountString, setWireCountString] = useState('');
@@ -336,7 +336,7 @@ export default function Home({navigation}) {
             maximumValue={80}
             minimumTrackTintColor={colors.primary}
             maximumTrackTintColor={colors.grey}
-            value={airTemp}
+            value={parseInt(airTemp)}
             onValueChange={(value) => setAirTempString(value.toFixed(0).toString())}
             onTouchEnd={() => setAirTemp(airTempString)}
           />
@@ -374,7 +374,7 @@ export default function Home({navigation}) {
                 maximumValue={80}
                 minimumTrackTintColor={colors.primary}
                 maximumTrackTintColor={colors.grey}
-                value={groundTemp}
+                value={parseInt(groundTemp)}
                 onValueChange={(value) => setGroundTempString(value.toFixed(0).toString())}
                 onTouchEnd={() => setGroundTemp(groundTempString)}
               />
@@ -411,7 +411,7 @@ export default function Home({navigation}) {
                 step={0.1}
                 minimumTrackTintColor={colors.primary}
                 maximumTrackTintColor={colors.grey}
-                value={groundRes}
+                value={parseFloat(groundRes)}
                 onValueChange={(value) => setGroundResString(value.toFixed(1).toString())}
                 onTouchEnd={() => setGroundRes(groundResString)}
               />
@@ -659,7 +659,7 @@ export default function Home({navigation}) {
             maximumValue={500}
             minimumTrackTintColor={colors.primary}
             maximumTrackTintColor={colors.grey}
-            value={valueType == "power" ? power : current}
+            value={valueType == "power" ? parseFloat(power) : parseFloat(current)}
             onValueChange={(value) => valueType == "power" ? setPowerString(value.toFixed(0).toString()) : setCurrentString(value.toFixed(0).toString())}
             onTouchEnd={() => valueType == "power" ? setPower(powerString) : setCurrent(currentString)}
           />
