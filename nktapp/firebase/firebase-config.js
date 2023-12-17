@@ -141,9 +141,10 @@ export async function addIssue(event){
   }
 }
 
-export async function addHistory(event){
+export async function addHistory(event, id){
+
   try {
-    await addDoc(collection(db, `users/${auth.currentUser.uid}/history/`), {
+    await setDoc(doc(db, `users/${auth.currentUser.uid}/history/`, id), {
       instalation: event.instalation,
       airTemperature: event.airTemperature,
       groundTemperature: event.groundTemperature,

@@ -189,18 +189,21 @@ export default function Home({navigation}) {
           current: valueType == "current" ? current : null
         }
 
+        const id = Date.now().toString();
+        console.log(id)
+
         if (valueType == "power"){
           setGlobalValues(instalation.title, airTemp, wireCount.title, metalType, isolationType, power, null, groundTemp, groundRes)
           const result = await getDataFromWires(instalation.title, airTemp, wireCount.title, metalType, isolationType, power, null, groundTemp, groundRes)
           //console.log(result)
-          addHistory(input2);
+          addHistory(input2, id);
           onAirClick();
           navigation.navigate('CableResult', {cables: result, input: input});
         } else {
           setGlobalValues(instalation.title, airTemp, wireCount.title, metalType, isolationType, null, current, groundTemp, groundRes)
           const result = await getDataFromWires(instalation.title, airTemp, wireCount.title, metalType, isolationType, null, current, groundTemp, groundRes)
           //console.log(result)
-          addHistory(input2)
+          addHistory(input2, id)
           onAirClick();
           navigation.navigate('CableResult', {cables: result, input: input});
         }
@@ -424,7 +427,7 @@ export default function Home({navigation}) {
         paddingTop: 20
       }}>
 
-        <InputCategory text="Liczba zył" />
+        <InputCategory text="Liczba żył" />
 
         <View style={{
           width: '100%',
@@ -461,7 +464,7 @@ export default function Home({navigation}) {
         width: '100%',
         marginTop: 20,
       }}>
-        <InputCategory text="Rodzaj metalu zyły przewodzącej" />
+        <InputCategory text="Rodzaj metalu żyły przewodzącej" />
         <View style={{
           width: '100%',
           height: 50,
