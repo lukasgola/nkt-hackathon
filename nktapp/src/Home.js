@@ -113,7 +113,9 @@ export default function Home({navigation}) {
     const [valueType, setValueType] = useState(null);
 
     const [power, setPower] = useState('5');
+    const [powerString, setPowerString] = useState(power);
     const [current, setCurrent] = useState('5');
+    const [currentString, setCurrentString] = useState(current)
 
 
     const isFocused = useIsFocused();
@@ -189,21 +191,18 @@ export default function Home({navigation}) {
           current: valueType == "current" ? current : null
         }
 
-        const id = Date.now().toString();
-        console.log(id)
+        const id = (Date.now()).toString();
 
         if (valueType == "power"){
           setGlobalValues(instalation.title, airTemp, wireCount.title, metalType, isolationType, power, null, groundTemp, groundRes)
           const result = await getDataFromWires(instalation.title, airTemp, wireCount.title, metalType, isolationType, power, null, groundTemp, groundRes)
-          //console.log(result)
-          addHistory(input2, id);
+          addHistory(input2, id, result);
           onAirClick();
           navigation.navigate('CableResult', {cables: result, input: input});
         } else {
           setGlobalValues(instalation.title, airTemp, wireCount.title, metalType, isolationType, null, current, groundTemp, groundRes)
           const result = await getDataFromWires(instalation.title, airTemp, wireCount.title, metalType, isolationType, null, current, groundTemp, groundRes)
-          //console.log(result)
-          addHistory(input2, id)
+          addHistory(input2, id, result)
           onAirClick();
           navigation.navigate('CableResult', {cables: result, input: input});
         }
@@ -650,8 +649,8 @@ export default function Home({navigation}) {
               textAlign: 'center',
               fontSize: 24
             }}
-            onChangeText={valueType == "power" ? setPower : setCurrent}
-            value={valueType == "power" ? power : current}
+            onChangeText={(value) => valueType == "power" ? [setPowerString(value), setPower(value)] : [setCurrentString(value), setCurrent(value)]}
+            value={valueType == "power" ? powerString : currentString}
             keyboardType="numeric"
           />
           <Slider
@@ -661,7 +660,8 @@ export default function Home({navigation}) {
             minimumTrackTintColor={colors.primary}
             maximumTrackTintColor={colors.grey}
             value={valueType == "power" ? power : current}
-            onValueChange={(value) => valueType == "power" ? setPower(value.toFixed(0).toString()) : setCurrent(value.toFixed(0).toString())}
+            onValueChange={(value) => valueType == "power" ? setPowerString(value.toFixed(0).toString()) : setCurrentString(value.toFixed(0).toString())}
+            onTouchEnd={() => valueType == "power" ? setPower(powerString) : setCurrent(currentString)}
           />
         </View>
       </View>

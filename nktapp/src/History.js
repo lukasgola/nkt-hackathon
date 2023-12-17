@@ -48,20 +48,7 @@ export default function History({navigation}) {
 
 
   const onHistoryClick = async (input) => {
-    console.log(input)
-    setGlobalValues(input.instalation, input.airTemperature, input.wireCount, input.metalType, input.isolationType, input.power, input.current, input.groundTemperature, input.groundResistance)
-    const result = getDataFromWires( 
-      input.instalation,
-      input.airTemperature,
-      input.wireCount,
-      input.metalType,
-      input.isolationType,
-      input.power,
-      input.current,
-      input.groundTemperature,
-      input.groundResistance,)
-
-      navigation.navigate('CableResult', {cables: result, input: input})
+      navigation.navigate('CableResult2', {cables: input.result, input: input})
   }
 
 
@@ -77,6 +64,11 @@ export default function History({navigation}) {
   }
 
   const Item = ({input}) => {
+
+    const date = new Date(parseInt(input.id));
+    const dateString = date.getDate() + '.' + (date.getMonth()+1) + '.' + date.getFullYear() + '  ' + date.getHours() + ':' + date.getMinutes();
+
+
     return(
       <TouchableOpacity 
         onPress={() => onHistoryClick(input) }
@@ -87,6 +79,14 @@ export default function History({navigation}) {
           backgroundColor: colors.background,
         }}
       >
+          <Text style={{
+            color: colors.primary,
+            fontSize: 18,
+            fontWeight: 'bold',
+            marginBottom: 10
+          }}>
+            {dateString}
+          </Text>
           <InputRow value={input.instalation} text={'Typ instalacji:'} />
           <InputRow value={input.airTemperature} text={'Temperatura powietrza:'} />
           <InputRow value={input.groundTemperature} text={'Temperatura gruntu:'} />

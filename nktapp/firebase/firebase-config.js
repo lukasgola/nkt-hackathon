@@ -141,7 +141,7 @@ export async function addIssue(event){
   }
 }
 
-export async function addHistory(event, id){
+export async function addHistory(event, id, result){
 
   try {
     await setDoc(doc(db, `users/${auth.currentUser.uid}/history/`, id), {
@@ -153,7 +153,8 @@ export async function addHistory(event, id){
       metalType: event.metalType,
       isolationType: event.isolationType,
       power: event.power,
-      current: event.current
+      current: event.current,
+      result: result
     });
   } catch (e) {
     console.error("Error adding document: ", e);

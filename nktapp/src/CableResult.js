@@ -64,7 +64,6 @@ export default function CableResult({route}) {
     const Item = ({item}) => {
 
         const filtered = cablesImgs.filter((i) => i.name == item.cableType)
-        console.log(filtered)
 
         return(
             <View style={{
@@ -116,10 +115,6 @@ export default function CableResult({route}) {
         }
     }
 
-    useEffect(()=> {
-        console.log(items)
-    }, [])
-
   
   return (
     <View style={{
@@ -130,6 +125,7 @@ export default function CableResult({route}) {
             data={items}
             renderItem={({item}) => <Item item={item} />}
             keyExtractor={item => item.id}
+            showsVerticalScrollIndicator={false}
             ListHeaderComponent={
                 <View style={{
                     marginTop: 10
@@ -146,6 +142,14 @@ export default function CableResult({route}) {
                 </View>
             }
             ListEmptyComponent={<EmptyComponent/>}
+            ListFooterComponent={
+                <View style={{
+                    width: '100%',
+                    height: 20
+                }}>
+                
+                </View>
+            }
         />
     </View>
   );

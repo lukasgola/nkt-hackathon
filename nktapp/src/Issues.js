@@ -162,6 +162,14 @@ export default function Issues({navigation}) {
           renderItem={({item}) => <Issue item={item} />}
           keyExtractor={item => item.id}
           ListEmptyComponent={<EmptyComponent/>}
+          ListFooterComponent={
+            <View style={{
+                width: '100%',
+                height: 20
+            }}>
+            
+            </View>
+        }
         />
       </View>
       

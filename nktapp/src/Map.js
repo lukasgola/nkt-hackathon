@@ -50,7 +50,6 @@ export default function Map() {
             id: doc.id,
         }
         temp.push(data);
-        console.log(data);
     });
     setIssues(temp)
 }
