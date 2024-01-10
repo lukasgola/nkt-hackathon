@@ -28,9 +28,3 @@ The Cable Load Calculator App is a React Native application designed to assist e
 <div>
   <img src='https://github.com/lukasgola/myportfolio/blob/main/src/assets/376shots_so.jpg' style="width: 100%;" />
 </div>
-
-## Working On
-Here are some planned features we're working on adding in the future:
-- **Scoring Algorithm**: Utilizes a scoring algorithm to suggest potential connections based on user preferences.
-- **Matching Algorithm**: Utilizes intelligent matching algorithms to suggest potential connections based on user preferences.
-- **Real-time Chat**: Engage in seamless conversations with matched users through Firebase-powered real-time messaging.
