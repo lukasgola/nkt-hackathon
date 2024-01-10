@@ -4,13 +4,18 @@
 
 ## Table of Contents
 - [Introduction](#introduction)
+- [Preview](#preview)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
-- [Preview](#preview)
 - [Working On](#working-on)
 
 ## Introduction
 The Cable Load Calculator App is a React Native application designed to assist electricians in calculating the load capacity of cables. The app utilizes Google Maps for location tracking, Expo Camera for capturing relevant images, and Firebase for backend services.
+
+## Preview
+<div>
+  <img src='https://github.com/lukasgola/myportfolio/blob/main/src/assets/376shots_so.jpg' style="width: 100%;" />
+</div>
 
 ## Features
 - **Load Calculation**: Calculate the load capacity of cables based on specified parameters.
@@ -23,8 +28,3 @@ The Cable Load Calculator App is a React Native application designed to assist e
 - Expo Camera: Capture images within the app.
 - Google Maps API: Integrate interactive maps for location tracking.
 - Firebase: Backend services for data storage and retrieval.
-
-## Preview
-<div>
-  <img src='https://github.com/lukasgola/myportfolio/blob/main/src/assets/376shots_so.jpg' style="width: 100%;" />
-</div>
