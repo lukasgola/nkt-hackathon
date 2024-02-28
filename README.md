@@ -14,7 +14,7 @@ The Cable Load Calculator App is a React Native application designed to assist e
 
 ## Preview
 <div>
-  <img src='https://github.com/lukasgola/myportfolio/blob/main/src/assets/376shots_so.jpg' style="width: 100%;" />
+  <img src='https://github.com/lukasgola/nkt-hackathon/blob/main/nktapp/assets/376shots_so.jpg' style="width: 100%;" />
 </div>
 
 ## Features
